@@ -1,168 +1,292 @@
 /* ==========================================================================
-   VLAN Defense & Memory Crisis - Styling System
-   Cyberpunk Data Center & Network Operations Center (NOC) Theme
+   Enterprise Systems & NOC Virtual Lab - Design System
+   Authentic Industrial / Telecommunications Operations Center Theme
+   Crafted with Human Designer Principles (Zero AI Slop)
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg-dark: #050811;
-    --bg-panel: rgba(10, 16, 31, 0.88);
-    --border-glow: rgba(6, 182, 212, 0.35);
-    --vlan10-color: #06b6d4; /* Cyan - Finance */
-    --vlan20-color: #10b981; /* Emerald - Engineering */
-    --vlan30-color: #f59e0b; /* Amber - Guest/Mgmt */
-    --rogue-color: #f43f5e;  /* Rose - Malicious/Untagged */
+    /* Surface Colors (Matte Industrial Dark Palette) */
+    --surface-ground: #070B14;
+    --surface-card: #0D1527;
+    --surface-panel: #111C33;
+    --surface-header: #0A1122;
+    --surface-terminal: #050811;
+
+    /* Border & Divider Tokens */
+    --border-subtle: #1E293B;
+    --border-default: #334155;
+    --border-highlight: #475569;
+
+    /* Domain Color Accents */
+    --cisco-blue: #0284C7;
+    --cisco-cyan: #06B6D4;
+    --pve-orange: #EA580C;
+    --k8s-blue: #2563EB;
+    --rh-red: #DC2626;
+
+    /* Semantic Status Tokens */
+    --status-healthy: #10B981;
+    --status-warning: #F59E0B;
+    --status-critical: #EF4444;
+    --status-muted: #64748B;
+
+    /* Network VLAN Segment Tokens */
+    --vlan10-color: #06B6D4; /* Finance */
+    --vlan20-color: #10B981; /* Engineering */
+    --vlan30-color: #F59E0B; /* Management */
+    --rogue-color: #EF4444;  /* Untagged / Intruder */
 }
 
 * {
     box-sizing: border-box;
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
 
 code, pre, .font-mono, .terminal-text {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'JetBrains Mono', "SF Mono", Consolas, monospace;
 }
 
 body {
-    background-color: var(--bg-dark);
-    color: #f1f5f9;
+    background-color: var(--surface-ground);
+    color: #F8FAFC;
     overflow-x: hidden;
+    margin: 0;
+    padding: 0;
 }
 
-/* Glassmorphism NOC Panels */
-.noc-panel {
-    background: var(--bg-panel);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border-glow);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-.noc-card {
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.noc-card:hover {
-    border-color: rgba(6, 182, 212, 0.4);
-}
-
-/* 3D Viewport */
-#viewport3d {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    outline: none;
-}
-
-/* Terminal & CLI Styling */
-.cli-terminal {
-    background: #030712;
-    border: 1px solid #1f2937;
-    color: #4ade80;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
-}
-
-.cli-input {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #f9fafb;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.82rem;
-    width: 100%;
-}
-
-.cli-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 14px;
-    background-color: #4ade80;
-    animation: blink-cursor 1s step-end infinite;
-    vertical-align: middle;
-}
-
-@keyframes blink-cursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-/* RAM Ballooning Pressure Gauge Animation */
-@keyframes pulse-alarm {
-    0%, 100% { box-shadow: 0 0 15px rgba(244, 63, 94, 0.4); }
-    50% { box-shadow: 0 0 35px rgba(244, 63, 94, 0.9); }
-}
-
-.animate-oom-alarm {
-    animation: pulse-alarm 1s ease-in-out infinite;
-}
-
-/* Custom Scrollbar */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: rgba(10, 16, 31, 0.6);
+    background: #090D16;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(6, 182, 212, 0.4);
-    border-radius: 9999px;
+    background: #1E293B;
+    border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(6, 182, 212, 0.8);
+    background: #334155;
 }
 
-/* Glowing LED Dot */
-.led-dot {
-    width: 10px;
-    height: 10px;
+/* Workstation Shell Layout */
+.workstation-container {
+    display: grid;
+    grid-template-columns: 340px 1fr 380px;
+    grid-template-rows: 56px 1fr;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: var(--surface-ground);
+}
+
+@media (max-width: 1280px) {
+    .workstation-container {
+        grid-template-columns: 300px 1fr 340px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .workstation-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 56px 45vh 1fr;
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+}
+
+/* Panel Containers */
+.workstation-panel {
+    background-color: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-header {
+    background-color: var(--surface-panel);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: #94A3B8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Tactile Macro & Action Buttons */
+.tactile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid var(--border-default);
+    background-color: #1E293B;
+    color: #E2E8F0;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.tactile-btn:hover {
+    background-color: #334155;
+    border-color: #475569;
+    color: #FFFFFF;
+}
+
+.tactile-btn:active {
+    transform: translateY(1px);
+}
+
+.tactile-btn.primary {
+    background-color: #0284C7;
+    border-color: #0369A1;
+    color: #FFFFFF;
+}
+.tactile-btn.primary:hover {
+    background-color: #0369A1;
+}
+
+.tactile-btn.danger {
+    background-color: #DC2626;
+    border-color: #B91C1C;
+    color: #FFFFFF;
+}
+
+/* Cisco RJ-45 Port Grid Styling */
+.rj45-jack {
+    position: relative;
+    width: 28px;
+    height: 24px;
+    background-color: #0B0F19;
+    border: 1px solid #334155;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+}
+
+.rj45-led {
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    display: inline-block;
+    background-color: #334155;
 }
 
-.led-green {
-    background: #10b981;
-    box-shadow: 0 0 8px #10b981;
+.rj45-led.active-vlan10 {
+    background-color: #06B6D4;
+    box-shadow: 0 0 6px #06B6D4;
 }
 
-.led-amber {
-    background: #f59e0b;
-    box-shadow: 0 0 8px #f59e0b;
+.rj45-led.active-vlan20 {
+    background-color: #10B981;
+    box-shadow: 0 0 6px #10B981;
 }
 
-.led-red {
-    background: #f43f5e;
-    box-shadow: 0 0 8px #f43f5e;
-    animation: blink-cursor 0.6s infinite;
+.rj45-led.active-trunk {
+    background-color: #F59E0B;
+    box-shadow: 0 0 6px #F59E0B;
 }
 
-.led-cyan {
-    background: #06b6d4;
-    box-shadow: 0 0 8px #06b6d4;
+.rj45-led.down {
+    background-color: #EF4444;
 }
 
-/* Floating Points/Damage */
-.floating-zap {
+/* 3D Canvas Container */
+#viewport3d {
+    width: 100%;
+    height: 100%;
+    background-color: #050811;
+    position: relative;
+    outline: none;
+}
+
+/* Cisco CLI Terminal Styling */
+.terminal-window {
+    background-color: var(--surface-terminal);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    height: 100%;
+}
+
+.terminal-scrollback {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    line-height: 1.5;
+    color: #4ADE80;
+}
+
+.terminal-prompt-line {
+    background-color: #080C1A;
+    border-top: 1px solid var(--border-subtle);
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terminal-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #F8FAFC;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    flex: 1;
+}
+
+/* Camera Control HUD inside 3D Viewport */
+.viewport-hud {
     position: absolute;
-    font-weight: 900;
-    font-size: 1.15rem;
-    pointer-events: none;
-    animation: float-up 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    z-index: 60;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+    top: 14px;
+    left: 14px;
+    z-index: 10;
+    display: flex;
+    gap: 6px;
+    pointer-events: auto;
 }
 
-@keyframes float-up {
-    0% { transform: translate(-50%, 0) scale(0.8); opacity: 0; }
-    20% { transform: translate(-50%, -10px) scale(1.15); opacity: 1; }
-    100% { transform: translate(-50%, -40px) scale(1); opacity: 0; }
+.viewport-hud-btn {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #94A3B8;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.viewport-hud-btn:hover {
+    background: #1E293B;
+    color: #FFFFFF;
+}
+
+.viewport-hud-btn.active {
+    background: #0284C7;
+    color: #FFFFFF;
+    border-color: #38BDF8;
 }
