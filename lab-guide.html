@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Praktikum &amp; Lembar Kerja Mahasiswa - VLAN &amp; Memory Overcommit</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050811">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#050811] text-slate-100 min-h-screen selection:bg-cyan-500 selection:text-black">
+
+    <!-- Header -->
+    <header class="border-b border-cyan-500/20 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="index.html" class="px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-900 hover:bg-slate-800 text-xs font-mono text-cyan-300 transition-all">
+                    &larr; NOC Portal
+                </a>
+                <span class="text-sm font-bold text-slate-100 hidden sm:inline">Modul &amp; Lembar Kerja Mahasiswa (LKM)</span>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <a href="Modul_Praktikum_VLAN_dan_Memory_Crisis.docx" download class="inline-flex items-center px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-xs font-bold text-slate-950 transition-all shadow-md shadow-cyan-600/30">
+                    Unduh Modul (.DOCX)
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 space-y-12">
+
+        <!-- Title Block -->
+        <div class="space-y-3 border-b border-slate-800 pb-8 text-center sm:text-left">
+            <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+                PANDUAN PRAKTIKUM &amp; RUBRIK EVALUASI KELAS
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-100">
+                Gamifikasi Praktikum: VLAN Tower Defense &amp; Memory Overcommit Crisis
+            </h1>
+            <p class="text-slate-400 text-sm leading-relaxed">
+                Materi praktikum gamifikasi berbasis web ringan untuk mata kuliah Jaringan Komputer, Sistem Operasi Lanjut, dan Komputasi Awan (Cloud Computing). Dirancang agar mahasiswa dapat memahami konsep fundamental tanpa membutuhkan spesifikasi laptop yang berat.
+            </p>
+        </div>
+
+        <!-- Section 1: Landasan Filosofi Gamifikasi -->
+        <section class="space-y-4">
+            <h2 class="text-xl font-bold text-cyan-300 flex items-center space-x-2">
+                <span>1. Latar Belakang &amp; Tujuan Gamifikasi Praktikum</span>
+            </h2>
+            <div class="prose prose-invert text-sm text-slate-300 space-y-3 leading-relaxed">
+                <p>
+                    Dalam praktikum konvensional, mahasiswa kerap menghadapi hambatan teknis seperti keterbatasan hardware saat menjalankan simulator berat (GNS3, EVE-NG, atau membuka beberapa Virtual Machine di VMware Workstation secara bersamaan). Pendekatan gamifikasi ini membagi tantangan ke dalam dua skenario terisolasi yang dapat dijalankan secara instan di web browser atau diintegrasikan ke laboratorium nyata:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+                        <span class="font-bold text-cyan-400 block">Skenario 1: VLAN Tower Defense</span>
+                        <p class="text-xs text-slate-400">
+                            Memahami segmentasi Layer 2 (Data Link), enkapsulasi IEEE 802.1Q trunking, dan pencegahan packet leakage antar departemen dalam batas waktu 15 menit.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 space-y-2">
+                        <span class="font-bold text-emerald-400 block">Skenario 2: Memory Overcommit Crisis</span>
+                        <p class="text-xs text-slate-400">
+                            Memahami manajemen resource hypervisor, virtio-ballooning memory reclamation, Kernel Samepage Merging (KSM), dan penanganan insiden Linux Out of Memory (OOM) Killer.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Panduan Cisco Packet Tracer (VLAN Tower Defense) -->
+        <section class="space-y-4 border-t border-slate-800 pt-8">
+            <h2 class="text-xl font-bold text-cyan-300 flex items-center space-x-2">
+                <span>2. Panduan Skenario 1: VLAN Tower Defense</span>
+            </h2>
+
+            <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+                <p>
+                    Untuk penerapan langsung pada perangkat lunak <b>Cisco Packet Tracer</b>, dosen atau instruktur dapat membuat <i>Custom Packet Activity (.pka)</i> dengan panduan konfigurasi CLI switch Cisco Catalyst sebagai berikut:
+                </p>
+
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs space-y-3">
+                    <span class="text-slate-400 block uppercase tracking-wider text-[11px]">// Tahap 1: Pembuatan VLAN Database</span>
+                    <div class="text-emerald-400">
+                        Switch&gt; enable<br>
+                        Switch# configure terminal<br>
+                        Switch(config)# vlan 10<br>
+                        Switch(config-vlan)# name Finance<br>
+                        Switch(config-vlan)# exit<br>
+                        Switch(config)# vlan 20<br>
+                        Switch(config-vlan)# name Engineering<br>
+                        Switch(config-vlan)# exit
+                    </div>
+
+                    <span class="text-slate-400 block uppercase tracking-wider text-[11px] pt-2">// Tahap 2: Konfigurasi Access Ports</span>
+                    <div class="text-cyan-400">
+                        Switch(config)# interface range fastEthernet 0/1 - 4<br>
+                        Switch(config-if-range)# switchport mode access<br>
+                        Switch(config-if-range)# switchport access vlan 10<br>
+                        Switch(config-if-range)# exit<br>
+                        Switch(config)# interface range fastEthernet 0/10 - 12<br>
+                        Switch(config-if-range)# switchport mode access<br>
+                        Switch(config-if-range)# switchport access vlan 20<br>
+                        Switch(config-if-range)# exit
+                    </div>
+
+                    <span class="text-slate-400 block uppercase tracking-wider text-[11px] pt-2">// Tahap 3: Konfigurasi 802.1Q Trunk Uplink</span>
+                    <div class="text-amber-400">
+                        Switch(config)# interface gigabitEthernet 0/1<br>
+                        Switch(config-if)# switchport trunk encapsulation dot1q<br>
+                        Switch(config-if)# switchport mode trunk<br>
+                        Switch(config-if)# switchport trunk allowed vlan 10,20<br>
+                        Switch(config-if)# exit<br>
+                        Switch(config)# do show vlan brief
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-cyan-950/20 border border-cyan-500/30 text-xs text-cyan-200">
+                    <b>Tantangan Gamifikasi (Misi 15 Menit):</b> Buat skrip traffic generator di Packet Tracer (menggunakan simulation mode complex PDU). Mahasiswa dinyatakan menang jika 100% paket Client A berhasil mencapai Server Finance tanpa satu pun paket masuk ke broadcast domain VLAN 20.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Panduan Proxmox/VMware (Memory Overcommit Crisis) -->
+        <section class="space-y-4 border-t border-slate-800 pt-8">
+            <h2 class="text-xl font-bold text-emerald-300 flex items-center space-x-2">
+                <span>3. Panduan Skenario 2: Memory Overcommit Crisis</span>
+            </h2>
+
+            <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+                <p>
+                    Pada lingkungan praktikum <b>Proxmox VE</b> atau <b>VMware ESXi</b>, berikan tantangan kepada tiap kelompok mahasiswa dengan spesifikasi fisik host 16 GB RAM yang menampung 3 Virtual Machine:
+                </p>
+
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs space-y-3">
+                    <span class="text-slate-400 block uppercase tracking-wider text-[11px]">// Perintah Konfigurasi virtio-balloon di Proxmox Host CLI</span>
+                    <div class="text-emerald-400">
+                        # Konfigurasi VM 101 (Web Nginx): Max 6GB, Min Balloon 1.5GB<br>
+                        qm set 101 --memory 6144 --balloon 1536<br><br>
+                        # Konfigurasi VM 102 (DB Postgres): Max 10GB, Min Balloon 3GB<br>
+                        qm set 102 --memory 10240 --balloon 3072<br><br>
+                        # Konfigurasi VM 103 (AI Worker): Max 14GB, Min Balloon 3.5GB<br>
+                        qm set 103 --memory 14336 --balloon 3584
+                    </div>
+
+                    <span class="text-slate-400 block uppercase tracking-wider text-[11px] pt-2">// Mengaktifkan Kernel Samepage Merging (KSM) pada Host Linux</span>
+                    <div class="text-cyan-400">
+                        systemctl enable --now ksmtuned<br>
+                        echo 1 &gt; /sys/kernel/mm/ksm/run<br>
+                        # Periksa jumlah memori yang berhasil di-deduplikasi:<br>
+                        cat /sys/kernel/mm/ksm/pages_sharing
+                    </div>
+
+                    <span class="text-slate-400 block uppercase tracking-wider text-[11px] pt-2">// Skrip Stress Test yang Dijalankan di Guest VM</span>
+                    <div class="text-amber-400">
+                        # Menjalankan stress memory worker pada VM 102:<br>
+                        stress-ng --vm 2 --vm-bytes 4G --vm-keep --timeout 300s
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-xs text-emerald-200">
+                    <b>Kondisi Kemenangan:</b> Kelompok mahasiswa yang paling cepat mengonfigurasi batas memory ballooning dinamis dan mengaktifkan KSM sehingga ketiga VM dapat menyelesaikan proses stress-test tanpa memicu Kernel Panic OOM adalah pemenangnya.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Rubrik Penilaian Praktikum -->
+        <section class="space-y-4 border-t border-slate-800 pt-8">
+            <h2 class="text-xl font-bold text-slate-100">
+                4. Rubrik Penilaian Praktikum (Asesmen Kinerja)
+            </h2>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs font-mono border border-slate-800 rounded-xl overflow-hidden">
+                    <thead class="bg-slate-900 text-cyan-300 border-b border-slate-800">
+                        <tr>
+                            <th class="p-3">Aspek Penilaian</th>
+                            <th class="p-3">Bobot</th>
+                            <th class="p-3">Kriteria Keberhasilan</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 bg-slate-950/60 text-slate-300">
+                        <tr>
+                            <td class="p-3 font-bold text-slate-200">Konfigurasi VLAN &amp; Trunking</td>
+                            <td class="p-3 text-cyan-400 font-bold">30%</td>
+                            <td class="p-3">VLAN 10 dan 20 terkonfigurasi dengan port access yang tepat; port gi0/1 beroperasi sebagai trunk 802.1Q tanpa kesalahan enkapsulasi.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-slate-200">Integritas Paket (Zero Leakage)</td>
+                            <td class="p-3 text-cyan-400 font-bold">25%</td>
+                            <td class="p-3">100% paket Finance tersalurkan ke server tujuan; tidak terjadi packet leak ke VLAN Engineering atau kompromi oleh node rogue.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-slate-200">Manajemen Memory Ballooning</td>
+                            <td class="p-3 text-emerald-400 font-bold">25%</td>
+                            <td class="p-3">Pengaturan target virtio-ballooning adaptif terhadap lonjakan beban stress-ng; alokasi memori tidak defisit di bawah batas kerja aktif VM.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-slate-200">Mitigasi Overcommit &amp; OOM</td>
+                            <td class="p-3 text-emerald-400 font-bold">20%</td>
+                            <td class="p-3">KSM aktif dengan deduplikasi efisien; host node Proxmox bertahan di bawah ambang batas OOM-Killer selama simulasi 15 menit penuh.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-950 py-6 text-center text-xs text-slate-500 font-mono mt-12">
+        <p>Modul Praktikum Jaringan Komputer &amp; Virtualisasi Cloud &copy; 2026. Dikembangkan untuk Perguruan Tinggi.</p>
+    </footer>
+
+</body>
+</html>
