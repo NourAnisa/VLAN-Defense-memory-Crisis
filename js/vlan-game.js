@@ -21,7 +21,7 @@ class VlanGameController {
             "fa0/10": { mode: "access", vlan: 1, shutdown: false },
             "fa0/11": { mode: "access", vlan: 1, shutdown: false },
             "fa0/12": { mode: "access", vlan: 1, shutdown: false },
-            "gi0/1": { mode: "access", vlan: 1, allowedVlans: [], shutdown: false }
+            "gi0/1": { mode: "access", vlan: 1, allowedVlans: [1], shutdown: false }
         };
 
         // Game Stats
@@ -39,6 +39,7 @@ class VlanGameController {
         // CLI State
         this.cliMode = "user"; // user ('Switch>'), priv ('Switch#'), config ('Switch(config)#'), iface ('Switch(config-if)#')
         this.currentInterface = null;
+        this.lastConfigVlan = null;
         this.commandHistory = [];
         this.historyIndex = -1;
 
@@ -60,8 +61,16 @@ class VlanGameController {
         this.packetsLeaked = 0;
         this.timer = 15 * 60;
 
+        const startBtn = document.getElementById("startMissionBtn");
+        if (startBtn) {
+            startBtn.innerText = "Misi Berjalan...";
+            startBtn.classList.remove("bg-cyan-600", "hover:bg-cyan-500");
+            startBtn.classList.add("bg-emerald-600", "text-white");
+        }
+
         if (this.clockTimer) clearInterval(this.clockTimer);
         this.clockTimer = setInterval(() => {
+            if (!this.gameActive) return;
             this.timer--;
             this.updateHUD();
             if (this.timer <= 0) {
@@ -70,29 +79,23 @@ class VlanGameController {
         }, 1000);
 
         if (this.spawnTimer) clearInterval(this.spawnTimer);
-        this.spawnTimer = setInterval(() => this.spawnTrafficPacket(), 2200);
+        this.spawnTimer = setInterval(() => this.spawnTrafficPacket(), 2400);
 
-        const banner = document.getElementById("mission-banner");
-        if (banner) banner.classList.remove("hidden");
         if (this.sound) this.sound.playVlanMatch();
-        this.printToCLI("⚡ MISI DIMULAI: Konfigurasi VLAN 10 (Finance), 20 (Engineering), dan 30 (Guest) agar paket tidak bocor!");
+        this.printToCLI("⚡ MISI DIAKTIFKAN: Aliran paket dimulai! Konfigurasikan VLAN port segera!");
     }
 
     spawnTrafficPacket() {
         if (!this.gameActive || !this.world) return;
 
         const rand = Math.random();
-        if (rand < 0.35) {
+        if (rand < 0.4) {
             // Client A generates VLAN 10 traffic
             this.world.spawnPacket("clientA", 10);
             if (this.sound) this.sound.playPacketZap();
-        } else if (rand < 0.65) {
+        } else if (rand < 0.75) {
             // Client B generates VLAN 20 traffic
             this.world.spawnPacket("clientB", 20);
-            if (this.sound) this.sound.playPacketZap();
-        } else if (rand < 0.85) {
-            // Client C generates VLAN 30 traffic
-            this.world.spawnPacket("clientC", 30);
             if (this.sound) this.sound.playPacketZap();
         } else {
             // Rogue intruder sends untagged / spoofed packet through Fa0/4!
@@ -100,9 +103,6 @@ class VlanGameController {
         }
     }
 
-    /**
-     * Evaluate whether packet is allowed through input port
-     */
     evaluatePacketEntry(packet) {
         let inputPort = "fa0/1";
         if (packet.startZ === 0) inputPort = "fa0/2";
@@ -110,35 +110,29 @@ class VlanGameController {
         else if (packet.startZ === 6) inputPort = "fa0/4";
 
         const portConf = this.ports[inputPort];
+        if (!portConf) return true;
 
-        // Check if port is shutdown
         if (portConf.shutdown) {
             this.spawnFloatingZap("PORT DOWN - DROPPED", "#94a3b8");
             return false;
         }
 
-        // Check Rogue packet
         if (packet.isRogue) {
             if (portConf.vlan === 1 && !portConf.shutdown) {
-                // Rogue packet leaked into default VLAN 1!
                 this.handlePacketLeak("⚠️ Rogue Packet Meretas Switch via Fa0/4 (Default VLAN 1)!");
                 return true;
             } else {
-                // Student secured port!
                 this.score += 50;
                 this.spawnFloatingZap("+50 ROGUE BLOCKED", "#10b981");
                 return false;
             }
         }
 
-        // Check Access VLAN Match
         if (portConf.mode === "access") {
             if (portConf.vlan === packet.vlanTag) {
-                // Match! Tag accepted
                 return true;
             } else {
-                // VLAN mismatch (e.g. packet 10 entering port assigned to vlan 1)
-                this.handlePacketLeak(`VLAN Mismatch di ${inputPort.toUpperCase()}! Paket VLAN ${packet.vlanTag} tidak diizinkan.`);
+                this.handlePacketLeak(`VLAN Mismatch di ${inputPort.toUpperCase()}! Paket VLAN ${packet.vlanTag} ditolak.`);
                 return false;
             }
         }
@@ -152,16 +146,15 @@ class VlanGameController {
         else if (packet.targetZ === 12) outPort = "fa0/12";
 
         const destConf = this.ports[outPort];
+        if (!destConf) return;
 
         if (destConf.vlan === packet.vlanTag) {
-            // Data successfully delivered to designated VLAN server!
             this.packetsDelivered++;
             this.score += 100;
             if (this.sound) this.sound.playVlanMatch();
-            this.spawnFloatingZap("+100 DATA DELIVERED", "#06b6d4");
+            this.spawnFloatingZap("+100 DELIVERED", "#06b6d4");
         } else {
-            // Leak: delivered to wrong department server!
-            this.handlePacketLeak(`DATA LEAK: Paket VLAN ${packet.vlanTag} terkirim ke Server yang salah (${outPort})!`);
+            this.handlePacketLeak(`DATA LEAK: Paket VLAN ${packet.vlanTag} bocor ke server port ${outPort.toUpperCase()}!`);
         }
 
         this.updateHUD();
@@ -170,7 +163,7 @@ class VlanGameController {
     handlePacketLeak(reason) {
         this.packetsLeaked++;
         this.switchHP = Math.max(0, this.switchHP - 15);
-        if (this.sound) this.sound.playPacketLeakAlert();
+        if (this.sound) this.sound.playOomAlert();
         this.spawnFloatingZap("-15% BUFFER LEAK", "#f43f5e");
         this.printToCLI(`[ALERT] ${reason}`);
         this.updateHUD();
@@ -183,37 +176,51 @@ class VlanGameController {
     spawnFloatingZap(text, color) {
         const el = document.createElement("div");
         el.className = "floating-zap";
+        el.style.position = "fixed";
         el.style.left = "50%";
-        el.style.top = "30%";
+        el.style.top = "25%";
+        el.style.transform = "translate(-50%, -50%)";
         el.style.color = color;
+        el.style.fontSize = "18px";
+        el.style.fontFamily = "'JetBrains Mono', monospace";
+        el.style.fontWeight = "bold";
+        el.style.textShadow = `0 0 10px ${color}`;
+        el.style.zIndex = "9999";
+        el.style.pointerEvents = "none";
         el.textContent = text;
         document.body.appendChild(el);
-        setTimeout(() => el.remove(), 1000);
+        setTimeout(() => el.remove(), 1200);
     }
 
     updateHUD() {
-        const hpEl = document.getElementById("hud-switch-hp");
-        const hpBar = document.getElementById("hud-switch-bar");
-        if (hpEl) hpEl.textContent = `${this.switchHP}%`;
+        const hpBar = document.getElementById("switchHealthBar");
+        const hpText = document.getElementById("switchHPText");
         if (hpBar) {
             hpBar.style.width = `${this.switchHP}%`;
-            hpBar.className = `h-full transition-all duration-300 ${this.switchHP > 50 ? 'bg-cyan-400' : 'bg-rose-500'}`;
+            hpBar.style.backgroundColor = this.switchHP > 50 ? "#10b981" : (this.switchHP > 25 ? "#f59e0b" : "#f43f5e");
+        }
+        if (hpText) {
+            hpText.innerText = `${this.switchHP}%`;
+            hpText.style.color = this.switchHP > 50 ? "#10b981" : (this.switchHP > 25 ? "#f59e0b" : "#f43f5e");
         }
 
-        const scoreEl = document.getElementById("hud-score");
-        if (scoreEl) scoreEl.textContent = this.score;
+        const scoreEl = document.getElementById("vlanScore");
+        if (scoreEl) scoreEl.innerText = this.score;
 
-        const deliveredEl = document.getElementById("hud-delivered");
-        if (deliveredEl) deliveredEl.textContent = this.packetsDelivered;
+        const waveEl = document.getElementById("vlanWave");
+        if (waveEl) waveEl.innerText = `Wave ${this.wave} / ${this.maxWaves}`;
 
-        const leakedEl = document.getElementById("hud-leaked");
-        if (leakedEl) leakedEl.textContent = this.packetsLeaked;
+        const delivEl = document.getElementById("statDelivered");
+        if (delivEl) delivEl.innerText = this.packetsDelivered;
 
-        const timerEl = document.getElementById("hud-timer");
+        const leakEl = document.getElementById("statLeaked");
+        if (leakEl) leakEl.innerText = this.packetsLeaked;
+
+        const timerEl = document.getElementById("vlanTimer");
         if (timerEl) {
             const m = Math.floor(this.timer / 60).toString().padStart(2, "0");
             const s = (this.timer % 60).toString().padStart(2, "0");
-            timerEl.textContent = `${m}:${s}`;
+            timerEl.innerText = `${m}:${s}`;
         }
     }
 
@@ -222,41 +229,61 @@ class VlanGameController {
         clearInterval(this.spawnTimer);
         clearInterval(this.clockTimer);
 
-        if (isWin) {
-            if (this.sound) this.sound.playSuccessChime();
-            alert(`🎉 SELAMAT! Praktikum VLAN Selesai dengan Sukses!\nSkor Akhir: ${this.score}\nPaket Terkirim: ${this.packetsDelivered}`);
-        } else {
-            alert(`💥 SWITCH BUFFER OVERFLOW / DATA BREACH!\nSwitch Core mengalami kebocoran data jaringan melebihi batas.\nSilakan periksa konfigurasi VLAN dan coba lagi.`);
+        const startBtn = document.getElementById("startMissionBtn");
+        if (startBtn) {
+            startBtn.innerText = "Mulai Ulang";
+            startBtn.className = "pointer-events-auto px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-slate-950 font-bold text-xs font-mono shadow-lg transition-all";
         }
+
+        if (isWin) {
+            if (this.sound) this.sound.playVictory();
+            this.saveLeaderboard(this.score);
+            alert(`🎉 SELAMAT! Praktikum VLAN Selesai dengan Sukses!\nSkor Akhir: ${this.score}\nPaket Terkirim: ${this.packetsDelivered}\nPaket Bocor: ${this.packetsLeaked}`);
+        } else {
+            alert(`💥 SWITCH BUFFER OVERFLOW!\nCore Switch mengalami kebocoran data berlebih.\nPeriksa konfigurasi Access Port & 802.1Q Trunk lalu coba lagi!`);
+        }
+    }
+
+    saveLeaderboard(finalScore) {
+        const studentName = localStorage.getItem("itlab_student_name") || "Mahasiswa IT";
+        const entry = {
+            name: studentName,
+            score: finalScore,
+            scenario: "VLAN Tower Defense",
+            timestamp: new Date().toISOString()
+        };
+
+        let scores = JSON.parse(localStorage.getItem("itlab_scores_vlan") || "[]");
+        scores.push(entry);
+        scores.sort((a, b) => b.score - a.score);
+        localStorage.setItem("itlab_scores_vlan", JSON.stringify(scores.slice(0, 10)));
     }
 
     // =========================================================================
     // CISCO IOS COMMAND LINE INTERPRETER (CLI)
     // =========================================================================
     bindCLI() {
-        const cliInput = document.getElementById("cli-input-field");
-        const cliPrompt = document.getElementById("cli-prompt-label");
-        const cliOutput = document.getElementById("cli-output");
-
+        const cliInput = document.getElementById("cliInput") || document.getElementById("cli-input-field");
         if (!cliInput) return;
 
         this.updatePrompt();
 
         cliInput.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
+                e.preventDefault();
                 const cmd = cliInput.value.trim();
                 cliInput.value = "";
                 if (cmd) {
-                    this.commandHistory.push(cmd);
-                    this.historyIndex = this.commandHistory.length;
-                    this.executeCommand(cmd);
+                    this.executeCLICommand(cmd);
                 }
             } else if (e.key === "ArrowUp") {
+                e.preventDefault();
                 if (this.historyIndex > 0) {
                     this.historyIndex--;
                     cliInput.value = this.commandHistory[this.historyIndex];
                 }
             } else if (e.key === "ArrowDown") {
+                e.preventDefault();
                 if (this.historyIndex < this.commandHistory.length - 1) {
                     this.historyIndex++;
                     cliInput.value = this.commandHistory[this.historyIndex];
@@ -269,17 +296,17 @@ class VlanGameController {
     }
 
     updatePrompt() {
-        const promptEl = document.getElementById("cli-prompt-label");
+        const promptEl = document.getElementById("cliPrompt") || document.getElementById("cli-prompt-label");
         if (!promptEl) return;
 
         if (this.cliMode === "user") promptEl.textContent = "Switch>";
         else if (this.cliMode === "priv") promptEl.textContent = "Switch#";
         else if (this.cliMode === "config") promptEl.textContent = "Switch(config)#";
-        else if (this.cliMode === "iface") promptEl.textContent = `Switch(config-if)#`;
+        else if (this.cliMode === "iface") promptEl.textContent = "Switch(config-if)#";
     }
 
     printToCLI(text) {
-        const cliOutput = document.getElementById("cli-output");
+        const cliOutput = document.getElementById("cliOutput") || document.getElementById("cli-output");
         if (!cliOutput) return;
 
         const line = document.createElement("div");
@@ -289,12 +316,19 @@ class VlanGameController {
         cliOutput.scrollTop = cliOutput.scrollHeight;
     }
 
-    executeCommand(cmd) {
+    executeCLICommand(cmd) {
+        if (!cmd) return;
+        cmd = cmd.trim();
+        this.commandHistory.push(cmd);
+        this.historyIndex = this.commandHistory.length;
+
         if (this.sound) this.sound.playKeyClick();
-        const fullPrompt = document.getElementById("cli-prompt-label").textContent;
+        const promptEl = document.getElementById("cliPrompt") || document.getElementById("cli-prompt-label");
+        const fullPrompt = promptEl ? promptEl.textContent : "Switch>";
         this.printToCLI(`${fullPrompt} ${cmd}`);
 
-        const parts = cmd.toLowerCase().split(/\s+/);
+        const lower = cmd.toLowerCase().trim();
+        const parts = lower.split(/\s+/);
         const root = parts[0];
 
         // Global Navigation Commands
@@ -313,7 +347,26 @@ class VlanGameController {
         }
 
         if (root === "help" || root === "?") {
-            this.printToCLI("Perintah Tersedia:\n- enable\n- configure terminal\n- vlan <id>\n- name <nama>\n- interface <fa0/1.. | gi0/1>\n- switchport mode <access | trunk>\n- switchport access vlan <id>\n- shutdown / no shutdown\n- show vlan brief\n- show interfaces status");
+            this.printToCLI("Perintah Cisco IOS Tersedia:\n- enable (masuk privileged mode)\n- configure terminal (masuk global config)\n- vlan <id> (contoh: vlan 10, vlan 20)\n- name <nama> (contoh: name Finance)\n- interface <fa0/1..fa0/12 | gi0/1>\n- switchport mode access / switchport mode trunk\n- switchport access vlan <id>\n- shutdown / no shutdown\n- show vlan brief (atau: do show vlan brief)\n- show interfaces status");
+            return;
+        }
+
+        // Show commands available across any mode using "do show ..." or normal "show ..."
+        if (lower.includes("show vlan") || lower.includes("sh vlan")) {
+            this.showVlanBrief();
+            return;
+        }
+
+        if (lower.includes("show int") || lower.includes("sh int")) {
+            this.showInterfacesStatus();
+            return;
+        }
+
+        // Auto transition convenience: if student clicks "conf t" while in user mode, auto elevate!
+        if ((lower === "conf t" || lower.startsWith("configure")) && this.cliMode === "user") {
+            this.cliMode = "config";
+            this.updatePrompt();
+            this.printToCLI("Enter configuration commands, one per line. End with CNTL/Z.");
             return;
         }
 
@@ -324,24 +377,16 @@ class VlanGameController {
                 this.updatePrompt();
                 return;
             }
+            this.printToCLI(`% Perintah tidak valid dalam User Mode. Ketik "enable" terlebih dahulu.`);
+            return;
         }
 
         // Privileged Mode
         if (this.cliMode === "priv") {
-            if (cmd.startsWith("conf") || cmd === "configure terminal") {
+            if (cmd.startsWith("conf") || lower === "configure terminal" || lower === "conf t") {
                 this.cliMode = "config";
                 this.updatePrompt();
                 this.printToCLI("Enter configuration commands, one per line. End with CNTL/Z.");
-                return;
-            }
-
-            if (cmd === "show vlan brief" || cmd === "sh vlan") {
-                this.showVlanBrief();
-                return;
-            }
-
-            if (cmd === "show interfaces status" || cmd === "sh int status") {
-                this.showInterfacesStatus();
                 return;
             }
         }
@@ -349,7 +394,7 @@ class VlanGameController {
         // Global Configuration Mode
         if (this.cliMode === "config") {
             if (root === "vlan") {
-                const vlanId = parseInt(parts[1]);
+                const vlanId = parseInt(parts[1], 10);
                 if (!isNaN(vlanId) && vlanId >= 1 && vlanId <= 4094) {
                     if (!this.vlans[vlanId]) {
                         this.vlans[vlanId] = { name: `VLAN00${vlanId}`, status: "active", ports: [] };
@@ -368,14 +413,15 @@ class VlanGameController {
             }
 
             if (root === "interface" || root === "int") {
-                const ifaceName = parts[1];
-                if (this.ports[ifaceName]) {
-                    this.currentInterface = ifaceName;
+                let ifaceName = parts[1];
+                if (!ifaceName && parts.length > 2) ifaceName = parts[2];
+                if (ifaceName && this.ports[ifaceName.toLowerCase()]) {
+                    this.currentInterface = ifaceName.toLowerCase();
                     this.cliMode = "iface";
                     this.updatePrompt();
                     return;
                 } else {
-                    this.printToCLI(`% Invalid interface ${ifaceName}. Pilihan: fa0/1, fa0/2, fa0/3, fa0/4, fa0/10, fa0/11, fa0/12, gi0/1`);
+                    this.printToCLI(`% Invalid interface "${ifaceName}". Port tersedia: fa0/1 - fa0/4, fa0/10 - fa0/12, gi0/1`);
                     return;
                 }
             }
@@ -385,35 +431,39 @@ class VlanGameController {
         if (this.cliMode === "iface" && this.currentInterface) {
             const iface = this.currentInterface;
 
-            if (cmd === "shutdown") {
+            if (lower === "shutdown") {
                 this.ports[iface].shutdown = true;
                 this.printToCLI(`%LINK-5-CHANGED: Interface ${iface.toUpperCase()}, changed state to administratively down`);
                 if (this.world) this.world.updatePortConfiguration(iface, "access", 1);
                 return;
             }
 
-            if (cmd === "no shutdown") {
+            if (lower === "no shutdown") {
                 this.ports[iface].shutdown = false;
                 this.printToCLI(`%LINK-3-UPDOWN: Interface ${iface.toUpperCase()}, changed state to up`);
                 return;
             }
 
-            if (cmd.startsWith("switchport mode access") || cmd === "sw mo ac") {
+            // switchport mode access (or sw mode access, sw mo ac)
+            if (lower.includes("mode access") || lower.includes("mo ac") || lower.includes("mode acc")) {
                 this.ports[iface].mode = "access";
                 this.printToCLI(`Port ${iface.toUpperCase()} set to ACCESS mode.`);
                 if (this.world) this.world.updatePortConfiguration(iface, "access", this.ports[iface].vlan);
                 return;
             }
 
-            if (cmd.startsWith("switchport mode trunk") || cmd === "sw mo tr") {
+            // switchport mode trunk (or sw mode trunk, sw mo tr)
+            if (lower.includes("mode trunk") || lower.includes("mo tr")) {
                 this.ports[iface].mode = "trunk";
                 this.printToCLI(`Port ${iface.toUpperCase()} set to TRUNK mode with 802.1Q encapsulation.`);
                 if (this.world) this.world.updatePortConfiguration(iface, "trunk", 1);
                 return;
             }
 
-            if (cmd.startsWith("switchport access vlan") || cmd.startsWith("sw ac vl")) {
-                const vlanId = parseInt(parts[parts.length - 1]);
+            // switchport access vlan <id> (or sw acc vlan, sw acc vl, etc.)
+            if (lower.includes("access vlan") || lower.includes("acc vlan") || lower.includes("acc vl")) {
+                const lastToken = parts[parts.length - 1];
+                const vlanId = parseInt(lastToken, 10);
                 if (!isNaN(vlanId)) {
                     this.ports[iface].vlan = vlanId;
                     this.printToCLI(`Port ${iface.toUpperCase()} assigned to VLAN ${vlanId}.`);
@@ -421,9 +471,20 @@ class VlanGameController {
                     return;
                 }
             }
+
+            // switch interface while inside iface mode
+            if (root === "interface" || root === "int") {
+                let ifaceName = parts[1];
+                if (ifaceName && this.ports[ifaceName.toLowerCase()]) {
+                    this.currentInterface = ifaceName.toLowerCase();
+                    this.cliMode = "iface";
+                    this.updatePrompt();
+                    return;
+                }
+            }
         }
 
-        this.printToCLI(`% Unknown or incomplete command: "${cmd}". Ketik "help" untuk bantuan.`);
+        this.printToCLI(`% Unknown or incomplete command: "${cmd}". Ketik "help" untuk panduan.`);
     }
 
     showVlanBrief() {
@@ -433,7 +494,7 @@ class VlanGameController {
         for (let [vId, v] of Object.entries(this.vlans)) {
             if (vId === "1") continue;
             const assignedPorts = Object.entries(this.ports)
-                .filter(([pName, pConf]) => pConf.mode === "access" && pConf.vlan === parseInt(vId))
+                .filter(([pName, pConf]) => pConf.mode === "access" && pConf.vlan === parseInt(vId, 10))
                 .map(([pName]) => pName.toUpperCase())
                 .join(", ") || "none";
             this.printToCLI(`${vId.padEnd(5)} ${(v.name || "").padEnd(32)} active    ${assignedPorts}`);
@@ -450,30 +511,22 @@ class VlanGameController {
     }
 
     bindControls() {
-        const btnStart = document.getElementById("btn-start-vlan");
-        if (btnStart) btnStart.addEventListener("click", () => this.startMission());
+        const btnStart = document.getElementById("startMissionBtn") || document.getElementById("btn-start-vlan");
+        if (btnStart) {
+            btnStart.addEventListener("click", () => this.startMission());
+        }
 
-        const btnQuickConfig = document.getElementById("btn-quick-config");
-        if (btnQuickConfig) {
-            btnQuickConfig.addEventListener("click", () => {
-                // Auto-configure sample to assist students who need a hint
-                this.executeCommand("enable");
-                this.executeCommand("configure terminal");
-                this.executeCommand("vlan 10");
-                this.executeCommand("name FINANCE");
-                this.executeCommand("interface fa0/1");
-                this.executeCommand("switchport mode access");
-                this.executeCommand("switchport access vlan 10");
-                this.executeCommand("interface fa0/10");
-                this.executeCommand("switchport mode access");
-                this.executeCommand("switchport access vlan 10");
-                this.executeCommand("exit");
-                this.executeCommand("exit");
+        const muteBtn = document.getElementById("muteBtn");
+        if (muteBtn) {
+            muteBtn.addEventListener("click", () => {
+                const isMuted = this.sound ? this.sound.toggleMute() : false;
+                muteBtn.innerText = isMuted ? "Audio: OFF" : "Audio: ON";
             });
         }
     }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    window.labSound = new LabSoundEngine();
     window.vlanGame = new VlanGameController();
 });

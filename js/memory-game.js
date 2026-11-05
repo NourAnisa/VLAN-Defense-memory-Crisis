@@ -82,6 +82,13 @@ class MemoryGameController {
             this.vms[id].status = "running";
         });
 
+        const startBtn = document.getElementById("startCrisisBtn");
+        if (startBtn) {
+            startBtn.innerText = "Simulasi Berjalan...";
+            startBtn.classList.remove("bg-emerald-600", "hover:bg-emerald-500");
+            startBtn.classList.add("bg-teal-700", "text-white");
+        }
+
         if (this.sound) {
             this.sound.startServerFan();
         }

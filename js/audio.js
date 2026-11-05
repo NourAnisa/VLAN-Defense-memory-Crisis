@@ -22,6 +22,9 @@ class LabSoundEngine {
     toggleMute() {
         this.muted = !this.muted;
         localStorage.setItem("itlab_muted", this.muted);
+        if (this.muted && this.fanHumNode) {
+            this.stopServerFan();
+        }
         return this.muted;
     }
 
@@ -109,6 +112,10 @@ class LabSoundEngine {
         osc.stop(this.ctx.currentTime + 0.5);
     }
 
+    playOomAlert() {
+        this.playOomAlarm();
+    }
+
     playBalloonHiss() {
         if (this.muted) return;
         this.initContext();
@@ -142,6 +149,38 @@ class LabSoundEngine {
             osc.start(start);
             osc.stop(start + 1.2);
         });
+    }
+
+    playVictory() {
+        this.playSuccessChime();
+    }
+
+    startServerFan() {
+        if (this.muted || this.fanHumNode) return;
+        try {
+            this.initContext();
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = "sawtooth";
+            osc.frequency.setValueAtTime(55, this.ctx.currentTime); // Low hum
+            gain.gain.setValueAtTime(0.02, this.ctx.currentTime);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start();
+            this.fanHumNode = { osc, gain };
+        } catch (e) {
+            // ignore audio context restrictions
+        }
+    }
+
+    stopServerFan() {
+        if (this.fanHumNode) {
+            try {
+                this.fanHumNode.osc.stop();
+                this.fanHumNode.osc.disconnect();
+            } catch (e) {}
+            this.fanHumNode = null;
+        }
     }
 }
 
