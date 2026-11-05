@@ -17,8 +17,8 @@ class Memory3DWorld {
         if (!window.THREE || !this.container) return;
 
         this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(0x070B14);
-        this.scene.fog = new THREE.FogExp2(0x070B14, 0.014);
+        this.scene.background = new THREE.Color(0xF8FAFC);
+        this.scene.fog = new THREE.FogExp2(0xF8FAFC, 0.008);
 
         const aspect = this.container.clientWidth / this.container.clientHeight;
         this.camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 500);
@@ -32,16 +32,16 @@ class Memory3DWorld {
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.container.appendChild(this.renderer.domElement);
 
-        // Lighting (Enterprise Datacenter Ambience)
-        const hemiLight = new THREE.HemisphereLight(0xF8FAFC, 0x0F172A, 0.7);
+        // Lighting (Clean White Studio Datacenter Ambience)
+        const hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0xE2E8F0, 0.95);
         this.scene.add(hemiLight);
 
-        const rackLight = new THREE.DirectionalLight(0xFFFFFF, 1.2);
+        const rackLight = new THREE.DirectionalLight(0xFFFFFF, 1.4);
         rackLight.position.set(15, 30, 25);
         rackLight.castShadow = true;
         this.scene.add(rackLight);
 
-        const coolantGlow = new THREE.PointLight(0x06B6D4, 1.6, 35);
+        const coolantGlow = new THREE.PointLight(0x0284C7, 1.4, 35);
         coolantGlow.position.set(16, 12, 6);
         this.scene.add(coolantGlow);
 
@@ -103,16 +103,16 @@ class Memory3DWorld {
             });
         });
 
-        // Datacenter Floor Tiles
+        // Datacenter Floor Tiles (Clean Pearl Gray)
         const floorGeo = new THREE.BoxGeometry(54, 1, 38);
-        const floorMat = new THREE.MeshStandardMaterial({ color: 0x070B14, roughness: 0.9, metalness: 0.1 });
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0xE2E8F0, roughness: 0.9, metalness: 0.05 });
         const floor = new THREE.Mesh(floorGeo, floorMat);
         floor.position.y = -0.5;
         floor.receiveShadow = true;
         this.scene.add(floor);
 
-        // Floor Grid
-        const grid = new THREE.GridHelper(50, 25, 0x1E293B, 0x0F172A);
+        // Floor Grid with High Contrast
+        const grid = new THREE.GridHelper(50, 25, 0x94A3B8, 0xCBD5E1);
         grid.position.y = 0.02;
         this.scene.add(grid);
 

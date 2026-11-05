@@ -21,8 +21,8 @@ class Vlan3DWorld {
 
         // 1. Scene, Camera & Renderer
         this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color(0x070B14);
-        this.scene.fog = new THREE.FogExp2(0x070B14, 0.014);
+        this.scene.background = new THREE.Color(0xF8FAFC);
+        this.scene.fog = new THREE.FogExp2(0xF8FAFC, 0.008);
 
         const aspect = this.container.clientWidth / this.container.clientHeight;
         this.camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 500);
@@ -36,16 +36,16 @@ class Vlan3DWorld {
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.container.appendChild(this.renderer.domElement);
 
-        // 2. Lighting Setup (Industrial Laboratory Illumination)
-        const hemiLight = new THREE.HemisphereLight(0xF8FAFC, 0x0F172A, 0.7);
+        // 2. Lighting Setup (Bright Studio Laboratory Illumination)
+        const hemiLight = new THREE.HemisphereLight(0xFFFFFF, 0xE2E8F0, 0.95);
         this.scene.add(hemiLight);
 
-        const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.3);
+        const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.4);
         keyLight.position.set(20, 45, 30);
         keyLight.castShadow = true;
         this.scene.add(keyLight);
 
-        const fillLight = new THREE.DirectionalLight(0x38BDF8, 0.4);
+        const fillLight = new THREE.DirectionalLight(0x0284C7, 0.35);
         fillLight.position.set(-25, 20, -20);
         this.scene.add(fillLight);
 
@@ -85,20 +85,20 @@ class Vlan3DWorld {
     }
 
     buildLabWorkbench() {
-        // Heavy Matte Datacenter Tile Surface
+        // Crisp White / Light Pearl Datacenter Surface
         const floorGeo = new THREE.BoxGeometry(64, 1.2, 44);
         const floorMat = new THREE.MeshStandardMaterial({
-            color: 0x0A0F1D,
-            roughness: 0.8,
-            metalness: 0.2
+            color: 0xE2E8F0,
+            roughness: 0.9,
+            metalness: 0.05
         });
         const floor = new THREE.Mesh(floorGeo, floorMat);
         floor.position.y = -0.6;
         floor.receiveShadow = true;
         this.scene.add(floor);
 
-        // Technical Grid Matrix
-        const grid = new THREE.GridHelper(60, 30, 0x1E293B, 0x0F172A);
+        // Technical Grid Matrix with High Contrast
+        const grid = new THREE.GridHelper(60, 30, 0x94A3B8, 0xCBD5E1);
         grid.position.y = 0.02;
         this.scene.add(grid);
     }

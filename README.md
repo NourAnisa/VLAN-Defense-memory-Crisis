@@ -39,7 +39,7 @@ Platform gamifikasi dan simulasi laboratorium interaktif untuk mata kuliah Jarin
 ## 💎 Filosofi Desain UI/UX: Authentic Engineering (Bukan AI Slop)
 
 Platform ini secara sengaja meninggalkan pola template AI generik (seperti gradien ungu-biru neon, orbs kabur yang mengambang, glassmorphism buram di semua kotak, dan kata-kata promosi klise) untuk menghadirkan antarmuka rekayasa asli:
-- <b>Palet Warna Fungsional:</b> Menggunakan warna standar industri (Charcoal &amp; Slate untuk NOC base, Cisco Navy/Emerald, Proxmox Orange/Teal, Kubernetes Royal Blue <code>#326CE5</code>, dan Red Hat Crimson <code>#EE0000</code>).
+- <b>Palet Warna Bersih &amp; Kontras Tinggi:</b> Menggunakan tema latar putih dan slate terang (Clean White Workstation) agar diagram topologi, bar kesehatan memori, dan konsol terminal terlihat jelas pada proyektor kelas maupun layar laptop mahasiswa.
 - <b>Kerapatan Informasi Nyata (Data Density):</b> Menampilkan status node aktual, bar level memori fisik, konsol serial COM1, dan tabel routing tanpa ruang kosong hampa.
 - <b>Bahasa &amp; Instruksi Manusiawi:</b> Struktur modul dan Lembar Kerja Mahasiswa (LKM) disusun dengan gaya penulisan dosen pengampu universitas (Nor Anisa, M.Kom), ringkas, teknis, dan langsung pada inti persoalan.
 
@@ -64,7 +64,7 @@ Platform ini secara sengaja meninggalkan pola template AI generik (seperti gradi
 - <code>k8s-vs-openshift.html</code>: Simulator komparasi arsitektur Vanilla Kubernetes vs Red Hat OpenShift dengan dual terminal CLI.
 - <code>lab-guide.html</code>: Lembar Kerja Mahasiswa (LKM) interaktif dan panduan konfigurasi step-by-step.
 - <code>Modul_Praktikum_VLAN_dan_Memory_Crisis.docx</code>: Dokumen Microsoft Word resmi berisi modul praktikum lengkap 5 bab dan rubrik penilaian dosen.
-- <code>css/style.css</code>: Sistem styling Industrial Enterprise &amp; NOC Glassmorphism.
+- <code>css/style.css</code>: Sistem styling Industrial Enterprise Clean White Workstation Theme.
 - <code>js/vlan-3d.js</code>: Engine visualisasi 3D Three.js untuk topologi switchboard, kabel fiber optik, dan partikel paket.
 - <code>js/vlan-game.js</code>: Logika permainan VLAN Defense dan parser perintah Cisco IOS CLI.
 - <code>js/memory-3d.js</code>: Engine visualisasi 3D Three.js untuk server rack data center dan reservoir coolant memori fisik.

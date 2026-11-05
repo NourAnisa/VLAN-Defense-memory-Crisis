@@ -5,55 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cisco Catalyst 3850 - 802.1Q VLAN Defense Workstation</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#070B14">
+    <meta name="theme-color" content="#FFFFFF">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-[#070B14] text-slate-100 h-screen w-screen overflow-hidden select-none">
+<body class="bg-[#F8FAFC] text-slate-800 h-screen w-screen overflow-hidden select-none">
 
     <!-- Main Workstation Layout Container -->
     <div class="workstation-container">
 
         <!-- Top Header Navigation Bar (Span 3 Cols) -->
-        <header class="col-span-full border-b border-slate-800 bg-[#0A1122] px-4 flex items-center justify-between z-30">
+        <header class="col-span-full border-b border-slate-200 bg-white px-4 flex items-center justify-between z-30 shadow-sm">
             <div class="flex items-center space-x-3">
-                <a href="index.html" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs font-mono text-cyan-300 border border-slate-700 flex items-center space-x-1 transition-all">
+                <a href="index.html" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-xs font-mono text-cyan-700 border border-slate-300 flex items-center space-x-1 transition-all">
                     <span>&larr; Portal NOC</span>
                 </a>
-                <div class="h-4 w-[1px] bg-slate-700"></div>
+                <div class="h-4 w-[1px] bg-slate-300"></div>
                 <div>
                     <div class="flex items-center space-x-2">
-                        <span class="text-xs font-bold text-slate-200">CISCO CATALYST 3850-24T-L</span>
-                        <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-cyan-950 text-cyan-400 border border-cyan-800">IOS 16.9.4</span>
+                        <span class="text-xs font-bold text-slate-900">CISCO CATALYST 3850-24T-L</span>
+                        <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-cyan-100 text-cyan-800 border border-cyan-300">IOS 16.9.4</span>
                     </div>
                 </div>
             </div>
 
             <!-- Central Switch Buffer Health Gauge -->
-            <div class="hidden md:flex items-center space-x-3 bg-slate-900/90 border border-slate-800 rounded px-3 py-1">
-                <span class="text-[11px] font-mono text-slate-400">BUFFER HEALTH:</span>
-                <div class="w-36 h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+            <div class="hidden md:flex items-center space-x-3 bg-slate-100 border border-slate-200 rounded px-3 py-1">
+                <span class="text-[11px] font-mono text-slate-600 font-bold">BUFFER HEALTH:</span>
+                <div class="w-36 h-2 bg-slate-200 rounded-full overflow-hidden border border-slate-300">
                     <div id="switchHealthBar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 100%;"></div>
                 </div>
-                <span id="switchHPText" class="text-xs font-mono font-bold text-emerald-400">100%</span>
+                <span id="switchHPText" class="text-xs font-mono font-bold text-emerald-600">100%</span>
             </div>
 
             <!-- Right Telemetry & Start Mission -->
             <div class="flex items-center space-x-3 font-mono text-xs">
-                <div class="bg-slate-900 border border-slate-800 rounded px-2.5 py-1 flex items-center space-x-3 text-[11px]">
+                <div class="bg-slate-100 border border-slate-200 rounded px-2.5 py-1 flex items-center space-x-3 text-[11px] text-slate-700">
                     <div>
                         <span class="text-slate-500 mr-1">TIMER:</span>
-                        <span id="vlanTimer" class="font-bold text-amber-400">15:00</span>
+                        <span id="vlanTimer" class="font-bold text-amber-600">15:00</span>
                     </div>
-                    <div class="border-l border-slate-800 pl-2">
+                    <div class="border-l border-slate-300 pl-2">
                         <span class="text-slate-500 mr-1">WAVE:</span>
-                        <span id="vlanWave" class="font-bold text-cyan-400">1/5</span>
+                        <span id="vlanWave" class="font-bold text-cyan-700">1/5</span>
                     </div>
-                    <div class="border-l border-slate-800 pl-2">
+                    <div class="border-l border-slate-300 pl-2">
                         <span class="text-slate-500 mr-1">SKOR:</span>
-                        <span id="vlanScore" class="font-bold text-emerald-400">0</span>
+                        <span id="vlanScore" class="font-bold text-emerald-600">0</span>
                     </div>
                 </div>
 
@@ -63,69 +63,69 @@
         </header>
 
         <!-- Left Sidebar: Topology Inspector & Port Matrix -->
-        <aside class="workstation-panel border-r border-slate-800 flex flex-col justify-between">
+        <aside class="workstation-panel border-r border-slate-200 bg-white flex flex-col justify-between">
             <div class="flex-1 overflow-y-auto">
-                <div class="panel-header">
+                <div class="panel-header border-b border-slate-200 bg-slate-50 text-slate-700">
                     <span>Patch Panel &amp; Port Matrix</span>
-                    <span class="text-emerald-400 text-[10px]">● Link Active</span>
+                    <span class="text-emerald-600 text-[10px]">● Link Active</span>
                 </div>
 
                 <!-- Live RJ-45 Port Status Grid -->
                 <div class="p-3.5 space-y-3">
                     <div class="space-y-1">
-                        <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">Port Layout (FastEthernet &amp; Gigabit):</span>
+                        <span class="text-[10px] font-mono text-slate-600 uppercase tracking-wider block font-bold">Port Layout (FastEthernet &amp; Gigabit):</span>
                         <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-mono">
-                            <div class="p-2 rounded bg-slate-900 border border-cyan-800/60">
-                                <span class="text-slate-400 block">Fa0/1</span>
-                                <span class="text-cyan-400 font-bold">VLAN 10</span>
+                            <div class="p-2 rounded bg-slate-50 border border-cyan-300">
+                                <span class="text-slate-600 block">Fa0/1</span>
+                                <span class="text-cyan-700 font-bold">VLAN 10</span>
                             </div>
-                            <div class="p-2 rounded bg-slate-900 border border-cyan-800/60">
-                                <span class="text-slate-400 block">Fa0/2</span>
-                                <span class="text-cyan-400 font-bold">VLAN 10</span>
+                            <div class="p-2 rounded bg-slate-50 border border-cyan-300">
+                                <span class="text-slate-600 block">Fa0/2</span>
+                                <span class="text-cyan-700 font-bold">VLAN 10</span>
                             </div>
-                            <div class="p-2 rounded bg-slate-900 border border-cyan-800/60">
-                                <span class="text-slate-400 block">Fa0/3</span>
-                                <span class="text-cyan-400 font-bold">VLAN 10</span>
+                            <div class="p-2 rounded bg-slate-50 border border-cyan-300">
+                                <span class="text-slate-600 block">Fa0/3</span>
+                                <span class="text-cyan-700 font-bold">VLAN 10</span>
                             </div>
-                            <div class="p-2 rounded bg-slate-900 border border-rose-800/60">
-                                <span class="text-slate-400 block">Fa0/4</span>
-                                <span class="text-rose-400 font-bold">SHUTDOWN</span>
+                            <div class="p-2 rounded bg-slate-50 border border-rose-300">
+                                <span class="text-slate-600 block">Fa0/4</span>
+                                <span class="text-rose-600 font-bold">SHUTDOWN</span>
                             </div>
-                            <div class="p-2 rounded bg-slate-900 border border-emerald-800/60">
-                                <span class="text-slate-400 block">Fa0/10</span>
-                                <span class="text-emerald-400 font-bold">VLAN 20</span>
+                            <div class="p-2 rounded bg-slate-50 border border-emerald-300">
+                                <span class="text-slate-600 block">Fa0/10</span>
+                                <span class="text-emerald-700 font-bold">VLAN 20</span>
                             </div>
-                            <div class="p-2 rounded bg-slate-900 border border-emerald-800/60">
-                                <span class="text-slate-400 block">Fa0/11</span>
-                                <span class="text-emerald-400 font-bold">VLAN 20</span>
+                            <div class="p-2 rounded bg-slate-50 border border-emerald-300">
+                                <span class="text-slate-600 block">Fa0/11</span>
+                                <span class="text-emerald-700 font-bold">VLAN 20</span>
                             </div>
-                            <div class="p-2 rounded bg-slate-900 border border-emerald-800/60">
-                                <span class="text-slate-400 block">Fa0/12</span>
-                                <span class="text-emerald-400 font-bold">VLAN 20</span>
+                            <div class="p-2 rounded bg-slate-50 border border-emerald-300">
+                                <span class="text-slate-600 block">Fa0/12</span>
+                                <span class="text-emerald-700 font-bold">VLAN 20</span>
                             </div>
-                            <div class="p-2 rounded bg-slate-900 border border-amber-800/60">
-                                <span class="text-slate-400 block">Gi0/1</span>
-                                <span class="text-amber-400 font-bold">TRUNK</span>
+                            <div class="p-2 rounded bg-slate-50 border border-amber-300">
+                                <span class="text-slate-600 block">Gi0/1</span>
+                                <span class="text-amber-700 font-bold">TRUNK</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Telemetry Throughput Summary -->
                     <div class="grid grid-cols-2 gap-2 text-xs font-mono pt-1">
-                        <div class="p-2 rounded bg-slate-950 border border-slate-800">
-                            <span class="text-[10px] text-slate-400 block">Paket Sukses:</span>
-                            <span id="statDelivered" class="text-emerald-400 font-bold text-sm">0</span>
+                        <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                            <span class="text-[10px] text-slate-500 block">Paket Sukses:</span>
+                            <span id="statDelivered" class="text-emerald-700 font-bold text-sm">0</span>
                         </div>
-                        <div class="p-2 rounded bg-slate-950 border border-slate-800">
-                            <span class="text-[10px] text-slate-400 block">Paket Bocor:</span>
-                            <span id="statLeaked" class="text-rose-400 font-bold text-sm">0</span>
+                        <div class="p-2 rounded bg-slate-50 border border-slate-200">
+                            <span class="text-[10px] text-slate-500 block">Paket Bocor:</span>
+                            <span id="statLeaked" class="text-rose-600 font-bold text-sm">0</span>
                         </div>
                     </div>
 
                     <!-- Mission Directives -->
-                    <div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-1 text-xs">
-                        <span class="text-[10px] font-mono font-bold text-cyan-400 uppercase block">Instruksi Misi:</span>
-                        <p class="text-slate-400 text-[11px] leading-relaxed">
+                    <div class="p-3 rounded bg-slate-50 border border-slate-200 space-y-1 text-xs">
+                        <span class="text-[10px] font-mono font-bold text-cyan-800 uppercase block">Instruksi Misi:</span>
+                        <p class="text-slate-600 text-[11px] leading-relaxed">
                             Konfigurasi VLAN 10 untuk divisi Finance (Fa0/1) dan VLAN 20 untuk Engineering (Fa0/10). Amankan Fa0/4 dengan shutdown agar rogue packet tertahan!
                         </p>
                     </div>
@@ -133,10 +133,10 @@
             </div>
 
             <!-- Tactile Quick Macro Buttons Bar -->
-            <div class="p-3 border-t border-slate-800 bg-[#090E1A]">
+            <div class="p-3 border-t border-slate-200 bg-slate-100">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-[10px] font-mono text-slate-400 uppercase">Perintah Cepat (Macro):</span>
-                    <button onclick="autoConfigureSample()" class="text-[10px] font-mono font-bold text-emerald-400 hover:text-emerald-300 underline cursor-pointer">
+                    <span class="text-[10px] font-mono text-slate-600 uppercase font-bold">Perintah Cepat (Macro):</span>
+                    <button onclick="autoConfigureSample()" class="text-[10px] font-mono font-bold text-emerald-700 hover:text-emerald-600 underline cursor-pointer">
                         Auto Setup (Solusi)
                     </button>
                 </div>
@@ -147,18 +147,18 @@
                     <button onclick="injectCommand('vlan 20')" class="tactile-btn text-[10px] py-1">vlan 20</button>
                     <button onclick="injectCommand('int fa0/1')" class="tactile-btn text-[10px] py-1">int fa0/1</button>
                     <button onclick="injectCommand('sw mode access')" class="tactile-btn text-[10px] py-1">mode acc</button>
-                    <button onclick="injectCommand('switchport access vlan 10')" class="tactile-btn text-[10px] py-1 text-cyan-300">acc vlan 10</button>
+                    <button onclick="injectCommand('switchport access vlan 10')" class="tactile-btn text-[10px] py-1 text-cyan-700 font-bold">acc vlan 10</button>
                     <button onclick="injectCommand('int gi0/1')" class="tactile-btn text-[10px] py-1">int gi0/1</button>
-                    <button onclick="injectCommand('sw mode trunk')" class="tactile-btn text-[10px] py-1 text-amber-300">mode trunk</button>
+                    <button onclick="injectCommand('sw mode trunk')" class="tactile-btn text-[10px] py-1 text-amber-700 font-bold">mode trunk</button>
                     <button onclick="injectCommand('int fa0/4')" class="tactile-btn text-[10px] py-1">int fa0/4</button>
                     <button onclick="injectCommand('shutdown')" class="tactile-btn danger text-[10px] py-1">shutdown</button>
-                    <button onclick="injectCommand('sh vlan brief')" class="tactile-btn text-[10px] py-1 text-purple-300">sh vlan</button>
+                    <button onclick="injectCommand('sh vlan brief')" class="tactile-btn text-[10px] py-1 text-purple-700 font-bold">sh vlan</button>
                 </div>
             </div>
         </aside>
 
-        <!-- Center Stage: 3D Network Switchboard Viewport -->
-        <main class="relative bg-[#070B14] overflow-hidden flex flex-col">
+        <!-- Center Stage: 3D Network Switchboard Viewport (Clean White Canvas) -->
+        <main class="relative bg-[#F8FAFC] overflow-hidden flex flex-col">
             <!-- Camera Perspective Selector HUD -->
             <div class="viewport-hud">
                 <button onclick="changeView('iso')" id="btnViewIso" class="viewport-hud-btn active">Isometric 3D</button>
@@ -170,19 +170,19 @@
             <div id="viewport3d" class="flex-1 w-full h-full"></div>
         </main>
 
-        <!-- Right Panel: Cisco IOS Serial Console Window -->
-        <section class="workstation-panel border-l border-slate-800 flex flex-col">
-            <div class="panel-header">
+        <!-- Right Panel: Cisco IOS Serial Console Window (High Contrast Terminal) -->
+        <section class="workstation-panel border-l border-slate-200 bg-white flex flex-col">
+            <div class="panel-header border-b border-slate-200 bg-slate-50 text-slate-700">
                 <span>Cisco IOS Serial Console (COM1)</span>
-                <span class="text-cyan-400 text-[10px]">9600 8N1</span>
+                <span class="text-cyan-700 text-[10px] font-bold">9600 8N1</span>
             </div>
 
             <!-- Terminal Scrollback Output -->
             <div id="cliOutput" class="terminal-scrollback flex-1 select-text">
-                <div class="text-slate-500">Cisco IOS Software, C3850 Software (C3850-UNIVERSALK9-M), Version 16.9.4</div>
-                <div class="text-slate-500">Technical Support: http://www.cisco.com/techsupport</div>
+                <div class="text-slate-400">Cisco IOS Software, C3850 Software (C3850-UNIVERSALK9-M), Version 16.9.4</div>
+                <div class="text-slate-400">Technical Support: http://www.cisco.com/techsupport</div>
                 <div class="text-cyan-400">Selamat datang di Cisco Catalyst 802.1Q VLAN Defense!</div>
-                <div class="text-slate-400">Ketik <span class="text-emerald-400 font-bold">enable</span> lalu <span class="text-emerald-400 font-bold">configure terminal</span> untuk mengonfigurasi port switch.</div>
+                <div class="text-slate-300">Ketik <span class="text-emerald-400 font-bold">enable</span> lalu <span class="text-emerald-400 font-bold">configure terminal</span> untuk mengonfigurasi port switch.</div>
                 <div class="text-slate-600">--------------------------------------------------</div>
             </div>
 

@@ -5,32 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Komparasi Kubernetes vs Red Hat OpenShift - Enterprise Container Lab</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0B0F19">
+    <meta name="theme-color" content="#FFFFFF">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-[#0B0F19] text-slate-100 min-h-screen selection:bg-rose-600 selection:text-white">
+<body class="bg-[#F8FAFC] text-slate-800 min-h-screen selection:bg-rose-600 selection:text-white">
 
     <!-- Top Navigation Header -->
-    <header class="border-b border-slate-800 bg-[#0F172A] sticky top-0 z-50">
+    <header class="border-b border-slate-200 bg-white sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <a href="index.html" class="px-3 py-1.5 rounded border border-slate-700 bg-slate-800/80 hover:bg-slate-700 text-xs font-mono text-cyan-300 transition-all flex items-center space-x-1.5">
+                <a href="index.html" class="px-3 py-1.5 rounded border border-slate-300 bg-slate-50 hover:bg-slate-100 text-xs font-mono font-bold text-cyan-800 transition-all flex items-center space-x-1.5">
                     <span>&larr; Portal NOC</span>
                 </a>
-                <div class="h-5 w-[1px] bg-slate-700"></div>
+                <div class="h-5 w-[1px] bg-slate-300"></div>
                 <div>
-                    <h1 class="text-xs sm:text-sm font-bold tracking-wider text-slate-100 uppercase">Enterprise Cloud Lab</h1>
-                    <p class="text-[11px] text-slate-400 font-mono">Vanilla Kubernetes (K8s) vs Red Hat OpenShift (OCP)</p>
+                    <h1 class="text-xs sm:text-sm font-bold tracking-wider text-slate-900 uppercase">Enterprise Cloud Lab</h1>
+                    <p class="text-[11px] text-slate-500 font-mono">Vanilla Kubernetes (K8s) vs Red Hat OpenShift (OCP)</p>
                 </div>
             </div>
 
             <div class="flex items-center space-x-3">
-                <span id="activeModeBadge" class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-[#326CE5]/20 text-[#326CE5] border border-[#326CE5]/40">
+                <span id="activeModeBadge" class="px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-blue-50 text-blue-700 border border-blue-200">
                     Kubernetes (Vanilla K8s v1.28)
                 </span>
-                <a href="lab-guide.html" class="px-3 py-1.5 rounded border border-slate-700 bg-slate-800 text-xs font-mono text-slate-300 hover:text-white">
+                <a href="lab-guide.html" class="px-3 py-1.5 rounded border border-slate-300 bg-slate-50 hover:bg-slate-100 text-xs font-mono font-bold text-slate-700">
                     Modul LKM
                 </a>
             </div>
@@ -41,119 +41,119 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
 
         <!-- Header Overview -->
-        <section class="border-b border-slate-800 pb-6 space-y-2">
+        <section class="border-b border-slate-200 pb-6 space-y-2">
             <div class="flex flex-wrap items-center gap-2">
-                <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-blue-950 text-blue-300 border border-blue-800">CNCF Standard</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-rose-950 text-rose-300 border border-rose-800">Red Hat Enterprise</span>
-                <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800 text-slate-300">Praktikum Sistem Terdistribusi</span>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-blue-50 text-blue-700 border border-blue-200">CNCF Standard</span>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200">Red Hat Enterprise</span>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-mono bg-slate-100 text-slate-600 border border-slate-200">Praktikum Sistem Terdistribusi</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
                 Analisis Arsitektur &amp; Hands-On Lab: Kubernetes vs OpenShift
             </h2>
-            <p class="text-slate-400 text-sm max-w-4xl leading-relaxed">
+            <p class="text-slate-600 text-sm max-w-4xl leading-relaxed">
                 Kubernetes adalah mesin orkestrasi kontainer open-source murni (upstream CNCF), sedangkan Red Hat OpenShift Container Platform (OCP) adalah distribusi enterprise lengkap berbasis Kubernetes dengan sistem keamanan bawaan, router Layer 7 otomatis, Source-to-Image (S2I), dan dukungan Red Hat Enterprise Linux CoreOS (RHCOS).
             </p>
         </section>
 
         <!-- Interactive Mode Switcher -->
-        <section class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border border-slate-800 bg-[#111827]">
+        <section class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
             <div class="space-y-1">
-                <span class="text-xs font-mono text-slate-400 uppercase tracking-wider block">Pilih Simulator Cluster Aktif:</span>
+                <span class="text-xs font-mono text-slate-500 uppercase tracking-wider block font-bold">Pilih Simulator Cluster Aktif:</span>
                 <div class="flex space-x-2">
-                    <button id="tab-mode-k8s" onclick="switchClusterMode('k8s')" class="px-4 py-2 text-xs font-mono font-bold rounded-md bg-[#326CE5] text-white transition-all shadow-md">
+                    <button id="tab-mode-k8s" onclick="switchClusterMode('k8s')" class="px-4 py-2 text-xs font-mono font-bold rounded-md bg-[#326CE5] text-white transition-all shadow-sm">
                         1. Vanilla Kubernetes (kubectl)
                     </button>
-                    <button id="tab-mode-ocp" onclick="switchClusterMode('openshift')" class="px-4 py-2 text-xs font-mono font-bold rounded-md text-slate-400 hover:text-slate-200 transition-all">
+                    <button id="tab-mode-ocp" onclick="switchClusterMode('openshift')" class="px-4 py-2 text-xs font-mono font-bold rounded-md bg-slate-100 text-slate-600 border border-slate-200 hover:text-slate-900 transition-all">
                         2. Red Hat OpenShift (oc)
                     </button>
                 </div>
             </div>
 
-            <div class="text-xs font-mono text-slate-400">
-                <span class="text-emerald-400 font-bold">Status Node:</span> 5 Worker Nodes Ready | API Server Online
+            <div class="text-xs font-mono text-slate-600">
+                <span class="text-emerald-600 font-bold">Status Node:</span> 5 Worker Nodes Ready | API Server Online
             </div>
         </section>
 
         <!-- Interactive Terminal Simulator Section -->
-        <section class="rounded-xl border border-slate-800 bg-[#0B0F19] overflow-hidden shadow-2xl">
+        <section class="rounded-xl border border-slate-300 bg-[#0F172A] overflow-hidden shadow-lg">
             <!-- Terminal Header -->
-            <div class="bg-slate-900 px-4 py-2.5 border-b border-slate-800 flex justify-between items-center text-xs">
+            <div class="bg-[#1E293B] px-4 py-2.5 border-b border-slate-700 flex justify-between items-center text-xs">
                 <div class="flex items-center space-x-2">
                     <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
                     <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
                     <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
-                    <span class="text-slate-300 font-mono ml-2 font-bold" id="terminalTitle">Cloud Operations Console (Bash Session)</span>
+                    <span class="text-slate-200 font-mono ml-2 font-bold" id="terminalTitle">Cloud Operations Console (Bash Session)</span>
                 </div>
                 <div class="flex items-center space-x-3 text-[11px] font-mono text-slate-400">
                     <span>Cluster IP: 10.96.0.1</span>
-                    <button onclick="injectTerm('clear')" class="hover:text-cyan-400 cursor-pointer">Clear</button>
+                    <button onclick="injectTerm('clear')" class="hover:text-cyan-400 cursor-pointer text-slate-300">Clear</button>
                 </div>
             </div>
 
             <!-- Terminal Output Area -->
             <div id="terminalOutput" class="h-64 sm:h-72 p-4 overflow-y-auto space-y-1 font-mono text-xs text-slate-200 select-text leading-relaxed">
-                <div class="text-slate-500">Terminal Emulator Terintegrasi untuk Praktikum Mahasiswa.</div>
+                <div class="text-slate-400">Terminal Emulator Terintegrasi untuk Praktikum Mahasiswa.</div>
                 <div class="text-slate-400">Ketik perintah di bawah atau gunakan tombol Quick Macro untuk mengeksekusi instruksi cluster.</div>
                 <div class="text-slate-600">--------------------------------------------------------------------------------</div>
             </div>
 
             <!-- Terminal Input Prompt -->
-            <div class="bg-slate-950 px-4 py-2.5 border-t border-slate-800 flex items-center space-x-2 font-mono text-xs">
+            <div class="bg-[#090D16] px-4 py-2.5 border-t border-slate-800 flex items-center space-x-2 font-mono text-xs">
                 <span id="terminalPrompt" class="shrink-0 font-bold"></span>
                 <input type="text" id="terminalInput" autofocus autocomplete="off" spellcheck="false" placeholder="Ketik perintah (contoh: kubectl get nodes atau oc status)..." class="bg-transparent flex-1 text-slate-100 outline-none">
-                <button onclick="submitTermInput()" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs font-mono cursor-pointer">
+                <button onclick="submitTermInput()" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold text-xs font-mono cursor-pointer border border-slate-700">
                     Kirim
                 </button>
             </div>
 
             <!-- Quick Macro Command Chips -->
-            <div class="bg-slate-900/60 p-3 border-t border-slate-800/80 flex flex-wrap items-center gap-1.5 text-xs font-mono">
-                <span class="text-[11px] text-slate-400 mr-2 uppercase">Perintah Cepat:</span>
+            <div class="bg-[#1E293B]/90 p-3 border-t border-slate-700/80 flex flex-wrap items-center gap-1.5 text-xs font-mono">
+                <span class="text-[11px] text-slate-400 mr-2 uppercase font-bold">Perintah Cepat:</span>
 
                 <!-- K8s Commands -->
                 <div id="k8sChips" class="flex flex-wrap gap-1.5">
-                    <button onclick="injectTerm('kubectl get nodes')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] hover:text-white text-slate-300 text-[11px]">kubectl get nodes</button>
-                    <button onclick="injectTerm('kubectl get pods -A')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] hover:text-white text-slate-300 text-[11px]">kubectl get pods -A</button>
-                    <button onclick="injectTerm('kubectl get ingress')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] hover:text-white text-slate-300 text-[11px]">kubectl get ingress</button>
-                    <button onclick="injectTerm('kubectl create deployment microservice-api --image=nginx')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] hover:text-white text-slate-300 text-[11px]">kubectl create deploy</button>
-                    <button onclick="injectTerm('kubectl scale deployment/microservice-api --replicas=3')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] hover:text-white text-slate-300 text-[11px]">kubectl scale deploy</button>
+                    <button onclick="injectTerm('kubectl get nodes')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] text-slate-200 text-[11px] border border-slate-700 transition-colors">kubectl get nodes</button>
+                    <button onclick="injectTerm('kubectl get pods -A')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] text-slate-200 text-[11px] border border-slate-700 transition-colors">kubectl get pods -A</button>
+                    <button onclick="injectTerm('kubectl get ingress')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] text-slate-200 text-[11px] border border-slate-700 transition-colors">kubectl get ingress</button>
+                    <button onclick="injectTerm('kubectl create deployment microservice-api --image=nginx')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] text-slate-200 text-[11px] border border-slate-700 transition-colors">kubectl create deploy</button>
+                    <button onclick="injectTerm('kubectl scale deployment/microservice-api --replicas=3')" class="px-2 py-1 rounded bg-slate-800 hover:bg-[#326CE5] text-slate-200 text-[11px] border border-slate-700 transition-colors">kubectl scale deploy</button>
                 </div>
 
                 <!-- OpenShift Commands -->
                 <div id="ocpChips" class="hidden flex flex-wrap gap-1.5">
-                    <button onclick="injectTerm('oc whoami')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 hover:text-white text-slate-300 text-[11px]">oc whoami</button>
-                    <button onclick="injectTerm('oc status')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 hover:text-white text-slate-300 text-[11px]">oc status</button>
-                    <button onclick="injectTerm('oc get nodes')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 hover:text-white text-slate-300 text-[11px]">oc get nodes</button>
-                    <button onclick="injectTerm('oc get routes')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 hover:text-white text-slate-300 text-[11px]">oc get routes</button>
-                    <button onclick="injectTerm('oc get bc')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 hover:text-white text-slate-300 text-[11px]">oc get bc (Builds)</button>
-                    <button onclick="injectTerm('oc new-app nodejs:18~https://github.com/app/fintech')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 hover:text-white text-slate-300 text-[11px]">oc new-app (S2I)</button>
-                    <button onclick="injectTerm('oc adm policy add-scc-to-user anyuid -z default')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 hover:text-white text-slate-300 text-[11px]">oc adm policy (SCC)</button>
+                    <button onclick="injectTerm('oc whoami')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 text-slate-200 text-[11px] border border-slate-700 transition-colors">oc whoami</button>
+                    <button onclick="injectTerm('oc status')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 text-slate-200 text-[11px] border border-slate-700 transition-colors">oc status</button>
+                    <button onclick="injectTerm('oc get nodes')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 text-slate-200 text-[11px] border border-slate-700 transition-colors">oc get nodes</button>
+                    <button onclick="injectTerm('oc get routes')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 text-slate-200 text-[11px] border border-slate-700 transition-colors">oc get routes</button>
+                    <button onclick="injectTerm('oc get bc')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 text-slate-200 text-[11px] border border-slate-700 transition-colors">oc get bc (Builds)</button>
+                    <button onclick="injectTerm('oc new-app nodejs:18~https://github.com/app/fintech')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 text-slate-200 text-[11px] border border-slate-700 transition-colors">oc new-app (S2I)</button>
+                    <button onclick="injectTerm('oc adm policy add-scc-to-user anyuid -z default')" class="px-2 py-1 rounded bg-slate-800 hover:bg-rose-700 text-slate-200 text-[11px] border border-slate-700 transition-colors">oc adm policy (SCC)</button>
                 </div>
             </div>
         </section>
 
         <!-- Side-by-Side YAML Manifest Comparison -->
         <section class="space-y-4">
-            <div class="flex items-center justify-between">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div>
-                    <h3 class="text-lg font-bold text-slate-100">Perbedaan Spesifikasi Resource (YAML Manifest)</h3>
-                    <p class="text-xs text-slate-400">Bandingkan bagaimana objek dikonfigurasikan di Kubernetes murni vs OpenShift Enterprise.</p>
+                    <h3 class="text-lg font-bold text-slate-900">Perbedaan Spesifikasi Resource (YAML Manifest)</h3>
+                    <p class="text-xs text-slate-500">Bandingkan bagaimana objek dikonfigurasikan di Kubernetes murni vs OpenShift Enterprise.</p>
                 </div>
-                <div class="flex space-x-1.5 bg-slate-900 p-1 rounded-lg border border-slate-800 text-xs font-mono">
-                    <button onclick="showYamlTab('route')" id="tabYamlRoute" class="px-3 py-1 rounded bg-slate-800 text-cyan-300 font-bold">1. Ingress vs Route</button>
-                    <button onclick="showYamlTab('security')" id="tabYamlSec" class="px-3 py-1 rounded text-slate-400 hover:text-slate-200">2. Keamanan (SCC vs PSS)</button>
-                    <button onclick="showYamlTab('build')" id="tabYamlBuild" class="px-3 py-1 rounded text-slate-400 hover:text-slate-200">3. Build &amp; CI/CD</button>
+                <div class="flex space-x-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs font-mono">
+                    <button onclick="showYamlTab('route')" id="tabYamlRoute" class="px-3 py-1 rounded bg-white text-cyan-800 font-bold border border-slate-300 shadow-sm">1. Ingress vs Route</button>
+                    <button onclick="showYamlTab('security')" id="tabYamlSec" class="px-3 py-1 rounded text-slate-600 hover:text-slate-900">2. Keamanan (SCC vs PSS)</button>
+                    <button onclick="showYamlTab('build')" id="tabYamlBuild" class="px-3 py-1 rounded text-slate-600 hover:text-slate-900">3. Build &amp; CI/CD</button>
                 </div>
             </div>
 
             <!-- YAML Tab 1: Ingress vs Route -->
             <div id="contentYamlRoute" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-4 rounded-xl bg-slate-950 border border-blue-900/50 space-y-2 font-mono text-xs">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <div class="p-4 rounded-xl bg-white border border-blue-200 shadow-sm space-y-2 font-mono text-xs">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                         <span class="font-bold text-[#326CE5]">Vanilla Kubernetes (Ingress)</span>
                         <span class="text-[10px] text-slate-500">networking.k8s.io/v1</span>
                     </div>
-                    <pre class="text-slate-300 overflow-x-auto text-[11px] leading-relaxed"><code>apiVersion: networking.k8s.io/v1
+                    <pre class="bg-slate-900 text-slate-200 p-3.5 rounded-lg overflow-x-auto text-[11px] leading-relaxed border border-slate-800"><code>apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: banking-ingress
@@ -173,17 +173,17 @@ spec:
             name: banking-svc
             port:
               number: 8080</code></pre>
-                    <p class="text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+                    <p class="text-[11px] text-slate-600 pt-2 border-t border-slate-200">
                         <b>Karakteristik:</b> Membutuhkan instalasi Ingress Controller terpisah (seperti Nginx atau Traefik) dan pengelola sertifikat (cert-manager).
                     </p>
                 </div>
 
-                <div class="p-4 rounded-xl bg-slate-950 border border-rose-900/50 space-y-2 font-mono text-xs">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                        <span class="font-bold text-rose-400">Red Hat OpenShift (Route)</span>
+                <div class="p-4 rounded-xl bg-white border border-rose-200 shadow-sm space-y-2 font-mono text-xs">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                        <span class="font-bold text-rose-600">Red Hat OpenShift (Route)</span>
                         <span class="text-[10px] text-slate-500">route.openshift.io/v1</span>
                     </div>
-                    <pre class="text-slate-300 overflow-x-auto text-[11px] leading-relaxed"><code>apiVersion: route.openshift.io/v1
+                    <pre class="bg-slate-900 text-slate-200 p-3.5 rounded-lg overflow-x-auto text-[11px] leading-relaxed border border-slate-800"><code>apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: banking-route
@@ -197,7 +197,7 @@ spec:
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect</code></pre>
-                    <p class="text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+                    <p class="text-[11px] text-slate-600 pt-2 border-t border-slate-200">
                         <b>Karakteristik:</b> Terintegrasi secara native dengan OpenShift Ingress Router (HAProxy). Mendukung automatic TLS Edge termination tanpa modul pihak ketiga.
                     </p>
                 </div>
@@ -205,12 +205,12 @@ spec:
 
             <!-- YAML Tab 2: Security (SCC vs PSS) -->
             <div id="contentYamlSec" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-4 rounded-xl bg-slate-950 border border-blue-900/50 space-y-2 font-mono text-xs">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <div class="p-4 rounded-xl bg-white border border-blue-200 shadow-sm space-y-2 font-mono text-xs">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                         <span class="font-bold text-[#326CE5]">Vanilla Kubernetes (Pod Security Standards)</span>
                         <span class="text-[10px] text-slate-500">v1 / SecurityContext</span>
                     </div>
-                    <pre class="text-slate-300 overflow-x-auto text-[11px] leading-relaxed"><code>apiVersion: v1
+                    <pre class="bg-slate-900 text-slate-200 p-3.5 rounded-lg overflow-x-auto text-[11px] leading-relaxed border border-slate-800"><code>apiVersion: v1
 kind: Pod
 metadata:
   name: secured-pod
@@ -226,17 +226,17 @@ spec:
       allowPrivilegeEscalation: false
       capabilities:
         drop: ["ALL"]</code></pre>
-                    <p class="text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+                    <p class="text-[11px] text-slate-600 pt-2 border-t border-slate-200">
                         <b>Karakteristik:</b> Developer harus secara manual menuliskan <code>runAsNonRoot</code> atau mengaktifkan label Admission PSS (Privileged, Baseline, Restricted) pada level namespace.
                     </p>
                 </div>
 
-                <div class="p-4 rounded-xl bg-slate-950 border border-rose-900/50 space-y-2 font-mono text-xs">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                        <span class="font-bold text-rose-400">Red Hat OpenShift (Security Context Constraints - SCC)</span>
+                <div class="p-4 rounded-xl bg-white border border-rose-200 shadow-sm space-y-2 font-mono text-xs">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                        <span class="font-bold text-rose-600">Red Hat OpenShift (Security Context Constraints - SCC)</span>
                         <span class="text-[10px] text-slate-500">security.openshift.io/v1</span>
                     </div>
-                    <pre class="text-slate-300 overflow-x-auto text-[11px] leading-relaxed"><code>apiVersion: security.openshift.io/v1
+                    <pre class="bg-slate-900 text-slate-200 p-3.5 rounded-lg overflow-x-auto text-[11px] leading-relaxed border border-slate-800"><code>apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   name: restricted-v2
@@ -248,7 +248,7 @@ seLinuxContext:
 readOnlyRootFilesystem: false
 supplementalGroups:
   type: RunAsAny</code></pre>
-                    <p class="text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+                    <p class="text-[11px] text-slate-600 pt-2 border-t border-slate-200">
                         <b>Karakteristik:</b> Secara default, OpenShift <b>menolak eksekusi kontainer sebagai root (UID 0)</b>. Setiap project dialokasikan rentang UID unik acak untuk mencegah eskalasi host.
                     </p>
                 </div>
@@ -256,28 +256,28 @@ supplementalGroups:
 
             <!-- YAML Tab 3: Build & CI/CD -->
             <div id="contentYamlBuild" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-4 rounded-xl bg-slate-950 border border-blue-900/50 space-y-2 font-mono text-xs">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <div class="p-4 rounded-xl bg-white border border-blue-200 shadow-sm space-y-2 font-mono text-xs">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-2">
                         <span class="font-bold text-[#326CE5]">Vanilla Kubernetes (Eksternal CI/CD)</span>
                         <span class="text-[10px] text-slate-500">Pipeline Eksternal</span>
                     </div>
-                    <pre class="text-slate-300 overflow-x-auto text-[11px] leading-relaxed"><code># Kubernetes murni tidak memiliki komponen build bawaan.
+                    <pre class="bg-slate-900 text-slate-200 p-3.5 rounded-lg overflow-x-auto text-[11px] leading-relaxed border border-slate-800"><code># Kubernetes murni tidak memiliki komponen build bawaan.
 # Workflow membutuhkan tool eksternal:
 1. Developer commit kode ke GitHub / GitLab
 2. GitHub Actions / Jenkins menjalankan docker build
 3. Push image ke Harbor / Docker Hub / AWS ECR
 4. Menjalankan 'kubectl apply -f deployment.yaml'</code></pre>
-                    <p class="text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+                    <p class="text-[11px] text-slate-600 pt-2 border-t border-slate-200">
                         <b>Karakteristik:</b> Fleksibel namun mengharuskan tim DevOps merakit dan merawat seluruh rantai build &amp; registry image secara mandiri.
                     </p>
                 </div>
 
-                <div class="p-4 rounded-xl bg-slate-950 border border-rose-900/50 space-y-2 font-mono text-xs">
-                    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                        <span class="font-bold text-rose-400">Red Hat OpenShift (Source-to-Image / BuildConfig)</span>
+                <div class="p-4 rounded-xl bg-white border border-rose-200 shadow-sm space-y-2 font-mono text-xs">
+                    <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+                        <span class="font-bold text-rose-600">Red Hat OpenShift (Source-to-Image / BuildConfig)</span>
                         <span class="text-[10px] text-slate-500">build.openshift.io/v1</span>
                     </div>
-                    <pre class="text-slate-300 overflow-x-auto text-[11px] leading-relaxed"><code>apiVersion: build.openshift.io/v1
+                    <pre class="bg-slate-900 text-slate-200 p-3.5 rounded-lg overflow-x-auto text-[11px] leading-relaxed border border-slate-800"><code>apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: fintech-api
@@ -294,7 +294,7 @@ spec:
     to:
       kind: ImageStreamTag
       name: 'fintech-api:latest'</code></pre>
-                    <p class="text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+                    <p class="text-[11px] text-slate-600 pt-2 border-t border-slate-200">
                         <b>Karakteristik:</b> Fitur Source-to-Image (S2I) mengompilasi kode sumber langsung menjadi kontainer di dalam cluster tanpa perlu menulis Dockerfile secara manual.
                     </p>
                 </div>
@@ -304,62 +304,62 @@ spec:
         <!-- Comprehensive Comparison Matrix Table -->
         <section class="space-y-4">
             <div>
-                <h3 class="text-lg font-bold text-slate-100">Matriks Perbandingan Mendalam: Kubernetes vs OpenShift</h3>
-                <p class="text-xs text-slate-400">Analisis komprehensif untuk bahan kajian praktikum, sertifikasi CKA/CKAD vs EX280 (Red Hat DO180/DO280).</p>
+                <h3 class="text-lg font-bold text-slate-900">Matriks Perbandingan Mendalam: Kubernetes vs OpenShift</h3>
+                <p class="text-xs text-slate-500">Analisis komprehensif untuk bahan kajian praktikum, sertifikasi CKA/CKAD vs EX280 (Red Hat DO180/DO280).</p>
             </div>
 
-            <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950/60">
+            <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
                 <table class="w-full text-left text-xs font-mono">
-                    <thead class="bg-slate-900 text-slate-300 border-b border-slate-800">
+                    <thead class="bg-slate-50 text-slate-700 border-b border-slate-200">
                         <tr>
                             <th class="p-3.5">Dimensi Komparasi</th>
                             <th class="p-3.5 text-[#326CE5]">Vanilla Kubernetes (K8s)</th>
-                            <th class="p-3.5 text-rose-400">Red Hat OpenShift (OCP)</th>
-                            <th class="p-3.5 text-slate-400">Implikasi Nyata di Industri</th>
+                            <th class="p-3.5 text-rose-600">Red Hat OpenShift (OCP)</th>
+                            <th class="p-3.5 text-slate-600">Implikasi Nyata di Industri</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                    <tbody class="divide-y divide-slate-200 text-slate-700">
                         <tr>
-                            <td class="p-3.5 font-bold text-slate-100">Kategori &amp; Lisensi</td>
+                            <td class="p-3.5 font-bold text-slate-900">Kategori &amp; Lisensi</td>
                             <td class="p-3.5">Open Source murni (Apache 2.0) di bawah CNCF.</td>
                             <td class="p-3.5">Distribusi Enterprise komersial (Red Hat) berbasis OKD.</td>
-                            <td class="p-3.5 text-slate-400">K8s gratis tanpa biaya lisensi; OpenShift menggunakan model langganan berbayar per core/socket dengan SLA 24/7.</td>
+                            <td class="p-3.5 text-slate-500">K8s gratis tanpa biaya lisensi; OpenShift menggunakan model langganan berbayar per core/socket dengan SLA 24/7.</td>
                         </tr>
                         <tr>
-                            <td class="p-3.5 font-bold text-slate-100">Sistem Operasi Host</td>
+                            <td class="p-3.5 font-bold text-slate-900">Sistem Operasi Host</td>
                             <td class="p-3.5">Bebas (Ubuntu, Debian, RHEL, Rocky, CentOS).</td>
                             <td class="p-3.5">Wajib RHCOS (Red Hat Enterprise Linux CoreOS) immutable.</td>
-                            <td class="p-3.5 text-slate-400">OpenShift melakukan upgrade OS node secara otomatis bersamaan dengan upgrade cluster.</td>
+                            <td class="p-3.5 text-slate-500">OpenShift melakukan upgrade OS node secara otomatis bersamaan dengan upgrade cluster.</td>
                         </tr>
                         <tr>
-                            <td class="p-3.5 font-bold text-slate-100">Postur Keamanan Default</td>
+                            <td class="p-3.5 font-bold text-slate-900">Postur Keamanan Default</td>
                             <td class="p-3.5">Permisif secara default; kontainer dapat berjalan sebagai root jika tidak dibatasi.</td>
                             <td class="p-3.5">Strict (Ketat); root container diblokir oleh Security Context Constraints (SCC).</td>
-                            <td class="p-3.5 text-slate-400">Sangat krusial untuk sektor perbankan &amp; fintech yang mewajibkan kepatuhan PCI-DSS dan ISO 27001.</td>
+                            <td class="p-3.5 text-slate-500">Sangat krusial untuk sektor perbankan &amp; fintech yang mewajibkan kepatuhan PCI-DSS dan ISO 27001.</td>
                         </tr>
                         <tr>
-                            <td class="p-3.5 font-bold text-slate-100">Routing &amp; Ingress Layer 7</td>
+                            <td class="p-3.5 font-bold text-slate-900">Routing &amp; Ingress Layer 7</td>
                             <td class="p-3.5">Harus menginstal Ingress Controller manual (Nginx, Traefik, Kong).</td>
                             <td class="p-3.5">Tersedia langsung (Built-in) via <code>Route</code> berbasis HAProxy.</td>
-                            <td class="p-3.5 text-slate-400">OpenShift langsung memberikan subdomain wildcard seperti <code>*.apps.ocp.internal</code> tanpa konfigurasi DNS eksternal yang rumit.</td>
+                            <td class="p-3.5 text-slate-500">OpenShift langsung memberikan subdomain wildcard seperti <code>*.apps.ocp.internal</code> tanpa konfigurasi DNS eksternal yang rumit.</td>
                         </tr>
                         <tr>
-                            <td class="p-3.5 font-bold text-slate-100">Image Registry &amp; CI/CD</td>
+                            <td class="p-3.5 font-bold text-slate-900">Image Registry &amp; CI/CD</td>
                             <td class="p-3.5">Memerlukan external registry (Harbor, DockerHub) dan CI/CD eksternal.</td>
                             <td class="p-3.5">Internal registry bawaan, Source-to-Image (S2I), dan OpenShift Pipelines (Tekton).</td>
-                            <td class="p-3.5 text-slate-400">Developer dapat langsung menjalankan <code>oc new-app</code> dari URL repositori Git tanpa membuat Dockerfile.</td>
+                            <td class="p-3.5 text-slate-500">Developer dapat langsung menjalankan <code>oc new-app</code> dari URL repositori Git tanpa membuat Dockerfile.</td>
                         </tr>
                         <tr>
-                            <td class="p-3.5 font-bold text-slate-100">Antarmuka Web (UI/UX)</td>
+                            <td class="p-3.5 font-bold text-slate-900">Antarmuka Web (UI/UX)</td>
                             <td class="p-3.5">Kubernetes Dashboard sederhana (sering dinonaktifkan di production).</td>
                             <td class="p-3.5">Web Console Enterprise kaya fitur dengan perspektif Administrator &amp; Developer.</td>
-                            <td class="p-3.5 text-slate-400">Visualisasi topologi aplikasi grafis bawaan mempermudah monitoring status pod, traffic flow, dan log secara real-time.</td>
+                            <td class="p-3.5 text-slate-500">Visualisasi topologi aplikasi grafis bawaan mempermudah monitoring status pod, traffic flow, dan log secara real-time.</td>
                         </tr>
                         <tr>
-                            <td class="p-3.5 font-bold text-slate-100">CLI &amp; Tooling</td>
+                            <td class="p-3.5 font-bold text-slate-900">CLI &amp; Tooling</td>
                             <td class="p-3.5"><code>kubectl</code> murni.</td>
                             <td class="p-3.5"><code>oc</code> CLI (super-set dari <code>kubectl</code>).</td>
-                            <td class="p-3.5 text-slate-400">Semua perintah <code>kubectl</code> dapat dijalankan menggunakan <code>oc</code>, tetapi <code>oc</code> memiliki perintah praktis seperti <code>oc project</code> dan <code>oc status</code>.</td>
+                            <td class="p-3.5 text-slate-500">Semua perintah <code>kubectl</code> dapat dijalankan menggunakan <code>oc</code>, tetapi <code>oc</code> memiliki perintah praktis seperti <code>oc project</code> dan <code>oc status</code>.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -369,7 +369,7 @@ spec:
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-[#0F172A] py-6 text-center text-xs text-slate-500 font-mono mt-12">
+    <footer class="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500 font-mono mt-12">
         <p>Modul Perbandingan Kubernetes &amp; Red Hat OpenShift &copy; 2026. Dikembangkan untuk Praktikum Perguruan Tinggi.</p>
     </footer>
 
@@ -386,15 +386,26 @@ spec:
             const kChips = document.getElementById("k8sChips");
             const oChips = document.getElementById("ocpChips");
             const termTitle = document.getElementById("terminalTitle");
+            const kTab = document.getElementById("tab-mode-k8s");
+            const oTab = document.getElementById("tab-mode-ocp");
+            const badge = document.getElementById("activeModeBadge");
 
             if (mode === "k8s") {
                 kChips.classList.remove("hidden");
                 oChips.classList.add("hidden");
                 termTitle.innerText = "Kubernetes Master Node (k8s-control-plane) - kubectl CLI";
+                kTab.className = "px-4 py-2 text-xs font-mono font-bold rounded-md bg-[#326CE5] text-white transition-all shadow-sm";
+                oTab.className = "px-4 py-2 text-xs font-mono font-bold rounded-md bg-slate-100 text-slate-600 border border-slate-200 hover:text-slate-900 transition-all";
+                badge.className = "px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-blue-50 text-blue-700 border border-blue-200";
+                badge.innerText = "Kubernetes (Vanilla K8s v1.28)";
             } else {
                 kChips.classList.add("hidden");
                 oChips.classList.remove("hidden");
                 termTitle.innerText = "Red Hat OpenShift CLI (oc v4.14) - developer@ocp4";
+                oTab.className = "px-4 py-2 text-xs font-mono font-bold rounded-md bg-[#EE0000] text-white transition-all shadow-sm";
+                kTab.className = "px-4 py-2 text-xs font-mono font-bold rounded-md bg-slate-100 text-slate-600 border border-slate-200 hover:text-slate-900 transition-all";
+                badge.className = "px-2.5 py-1 rounded-md text-[11px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200";
+                badge.innerText = "Red Hat OpenShift (OCP 4.14)";
             }
         }
 
@@ -422,10 +433,10 @@ spec:
                 const btn = document.getElementById("tabYaml" + (t === "route" ? "Route" : (t === "security" ? "Sec" : "Build")));
                 if (t === tabName) {
                     content.classList.remove("hidden");
-                    btn.className = "px-3 py-1 rounded bg-slate-800 text-cyan-300 font-bold";
+                    btn.className = "px-3 py-1 rounded bg-white text-cyan-800 font-bold border border-slate-300 shadow-sm";
                 } else {
                     content.classList.add("hidden");
-                    btn.className = "px-3 py-1 rounded text-slate-400 hover:text-slate-200";
+                    btn.className = "px-3 py-1 rounded text-slate-600 hover:text-slate-900";
                 }
             });
         }

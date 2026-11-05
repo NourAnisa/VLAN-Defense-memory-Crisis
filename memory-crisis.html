@@ -5,147 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proxmox VE 8.1 - Memory Overcommit Crisis Workstation</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#070B14">
+    <meta name="theme-color" content="#FFFFFF">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-[#070B14] text-slate-100 h-screen w-screen overflow-hidden select-none">
+<body class="bg-[#F8FAFC] text-slate-800 h-screen w-screen overflow-hidden select-none">
 
     <!-- Main Workstation Layout Container -->
     <div class="workstation-container">
 
         <!-- Top Header Navigation Bar (Span 3 Cols) -->
-        <header class="col-span-full border-b border-slate-800 bg-[#0A1122] px-4 flex items-center justify-between z-30">
+        <header class="col-span-full border-b border-slate-200 bg-white px-4 flex items-center justify-between z-30 shadow-sm">
             <div class="flex items-center space-x-3">
-                <a href="index.html" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs font-mono text-cyan-300 border border-slate-700 flex items-center space-x-1 transition-all">
+                <a href="index.html" class="px-2.5 py-1 rounded bg-slate-100 hover:bg-slate-200 text-xs font-mono text-cyan-700 border border-slate-300 flex items-center space-x-1 transition-all">
                     <span>&larr; Portal NOC</span>
                 </a>
-                <div class="h-4 w-[1px] bg-slate-700"></div>
+                <div class="h-4 w-[1px] bg-slate-300"></div>
                 <div>
                     <div class="flex items-center space-x-2">
-                        <span class="text-xs font-bold text-slate-200">PROXMOX VE 8.1-1</span>
-                        <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-800">Node: pve-node1</span>
-                        <span class="text-[11px] font-mono text-slate-400 hidden sm:inline">(Kernel 6.5.11-8-pve)</span>
+                        <span class="text-xs font-bold text-slate-900">PROXMOX VE 8.1-1</span>
+                        <span class="px-1.5 py-0.2 rounded text-[10px] font-mono bg-orange-100 text-orange-800 border border-orange-300 font-bold">Node: pve-node1</span>
+                        <span class="text-[11px] font-mono text-slate-500 hidden sm:inline">(Kernel 6.5.11-8-pve)</span>
                     </div>
                 </div>
             </div>
 
             <!-- Central Node Health Gauge -->
-            <div class="hidden md:flex items-center space-x-3 bg-slate-900/90 border border-slate-800 rounded px-3 py-1">
-                <span class="text-[11px] font-mono text-slate-400">NODE HEALTH:</span>
-                <div class="w-36 h-2 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+            <div class="hidden md:flex items-center space-x-3 bg-slate-100 border border-slate-200 rounded px-3 py-1">
+                <span class="text-[11px] font-mono text-slate-600 font-bold">NODE HEALTH:</span>
+                <div class="w-36 h-2 bg-slate-200 rounded-full overflow-hidden border border-slate-300">
                     <div id="hostHealthBar" class="h-full bg-emerald-500 transition-all duration-300" style="width: 100%;"></div>
                 </div>
-                <span class="text-xs font-mono font-bold text-amber-400">Overcommit 1.87x</span>
+                <span class="text-xs font-mono font-bold text-amber-700">Overcommit 1.87x</span>
             </div>
 
             <!-- Right Telemetry & Start Simulation -->
             <div class="flex items-center space-x-3 font-mono text-xs">
-                <div class="bg-slate-900 border border-slate-800 rounded px-2.5 py-1 flex items-center space-x-3 text-[11px]">
+                <div class="bg-slate-100 border border-slate-200 rounded px-2.5 py-1 flex items-center space-x-3 text-[11px] text-slate-700">
                     <div>
                         <span class="text-slate-500 mr-1">WAKTU:</span>
-                        <span id="crisisTimer" class="font-bold text-amber-400">15:00</span>
+                        <span id="crisisTimer" class="font-bold text-amber-600">15:00</span>
                     </div>
-                    <div class="border-l border-slate-800 pl-2">
+                    <div class="border-l border-slate-300 pl-2">
                         <span class="text-slate-500 mr-1">WAVE:</span>
-                        <span id="crisisWave" class="font-bold text-cyan-400">1/5</span>
+                        <span id="crisisWave" class="font-bold text-cyan-700">1/5</span>
                     </div>
-                    <div class="border-l border-slate-800 pl-2">
+                    <div class="border-l border-slate-300 pl-2">
                         <span class="text-slate-500 mr-1">SKOR:</span>
-                        <span id="crisisScore" class="font-bold text-emerald-400">0</span>
+                        <span id="crisisScore" class="font-bold text-emerald-600">0</span>
                     </div>
                 </div>
 
                 <button id="muteBtn" class="tactile-btn text-xs py-1">Audio: ON</button>
-                <button id="startCrisisBtn" class="tactile-btn primary text-xs py-1 shadow bg-emerald-700 border-emerald-600 hover:bg-emerald-600">
+                <button id="startCrisisBtn" class="tactile-btn primary text-xs py-1 shadow bg-emerald-600 border-emerald-700 hover:bg-emerald-500">
                     Mulai Simulasi Overcommit
                 </button>
             </div>
         </header>
 
         <!-- Left Sidebar: Proxmox Resource Tree & Host Memory Health -->
-        <aside class="workstation-panel border-r border-slate-800 flex flex-col justify-between">
+        <aside class="workstation-panel border-r border-slate-200 bg-white flex flex-col justify-between">
             <div class="flex-1 overflow-y-auto">
-                <div class="panel-header">
+                <div class="panel-header border-b border-slate-200 bg-slate-50 text-slate-700">
                     <span>Server Resource Tree</span>
-                    <span class="text-emerald-400 text-[10px]">● Online</span>
+                    <span class="text-emerald-600 text-[10px]">● Online</span>
                 </div>
 
                 <!-- Proxmox Datacenter Tree -->
                 <div class="p-3.5 space-y-3 font-mono text-xs">
-                    <div class="p-2.5 rounded bg-slate-950 border border-slate-800 space-y-1">
-                        <div class="text-slate-300 flex items-center space-x-1.5 font-bold">
+                    <div class="p-2.5 rounded bg-slate-50 border border-slate-200 space-y-1">
+                        <div class="text-slate-800 flex items-center space-x-1.5 font-bold">
                             <span>📁 Datacenter</span>
                         </div>
-                        <div class="pl-4 text-slate-300 flex items-center space-x-1.5">
+                        <div class="pl-4 text-slate-700 flex items-center space-x-1.5">
                             <span>🖥️ pve-node1</span>
-                            <span class="text-[10px] text-emerald-400">(16.0 GB RAM)</span>
+                            <span class="text-[10px] text-emerald-700 font-bold">(16.0 GB RAM)</span>
                         </div>
-                        <div class="pl-8 text-cyan-400 flex items-center justify-between text-[11px]">
+                        <div class="pl-8 text-cyan-800 flex items-center justify-between text-[11px] font-bold">
                             <span>📦 101 (web-nginx)</span>
-                            <span class="text-slate-500">4.0G / 6.0G</span>
+                            <span class="text-slate-500 font-normal">4.0G / 6.0G</span>
                         </div>
-                        <div class="pl-8 text-emerald-400 flex items-center justify-between text-[11px]">
+                        <div class="pl-8 text-emerald-800 flex items-center justify-between text-[11px] font-bold">
                             <span>📦 102 (db-postgres)</span>
-                            <span class="text-slate-500">6.0G / 10.0G</span>
+                            <span class="text-slate-500 font-normal">6.0G / 10.0G</span>
                         </div>
-                        <div class="pl-8 text-amber-400 flex items-center justify-between text-[11px]">
+                        <div class="pl-8 text-amber-800 flex items-center justify-between text-[11px] font-bold">
                             <span>📦 103 (ai-inference)</span>
-                            <span class="text-slate-500">6.0G / 14.0G</span>
+                            <span class="text-slate-500 font-normal">6.0G / 14.0G</span>
                         </div>
                     </div>
 
                     <!-- Host Physical RAM Usage Meter -->
-                    <div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-2">
+                    <div class="p-3 rounded bg-slate-50 border border-slate-200 space-y-2">
                         <div class="flex justify-between items-center text-[11px]">
-                            <span class="text-slate-400 uppercase">Physical RAM:</span>
-                            <span id="hostRamUsed" class="text-cyan-400 font-bold">0.00 GB / 16.00 GB (0%)</span>
+                            <span class="text-slate-600 uppercase font-bold">Physical RAM:</span>
+                            <span id="hostRamUsed" class="text-cyan-700 font-bold">0.00 GB / 16.00 GB (0%)</span>
                         </div>
-                        <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
-                            <div id="hostRamBar" class="h-full bg-cyan-500 transition-all duration-300" style="width: 0%;"></div>
+                        <div class="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden border border-slate-300">
+                            <div id="hostRamBar" class="h-full bg-cyan-600 transition-all duration-300" style="width: 0%;"></div>
                         </div>
                     </div>
 
                     <!-- KSM (Kernel Samepage Merging) Controls -->
-                    <div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-3 text-[11px]">
+                    <div class="p-3 rounded bg-slate-50 border border-slate-200 space-y-3 text-[11px]">
                         <div class="flex items-center justify-between">
                             <div>
-                                <span class="text-slate-200 font-bold block">Kernel Samepage Merging</span>
-                                <span class="text-[10px] text-slate-400">Deduplikasi RAM antar VM (hemat ~1.8G)</span>
+                                <span class="text-slate-800 font-bold block">Kernel Samepage Merging</span>
+                                <span class="text-[10px] text-slate-500">Deduplikasi RAM antar VM (hemat ~1.8G)</span>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="ksmToggle" checked class="sr-only peer">
-                                <div class="w-8 h-4 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-500"></div>
+                                <div class="w-8 h-4 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-600"></div>
                             </label>
                         </div>
 
                         <!-- ZRAM / Swap Allocation -->
                         <div class="space-y-1">
-                            <div class="flex justify-between text-[10px] text-slate-400">
+                            <div class="flex justify-between text-[10px] text-slate-600">
                                 <span>ZRAM / Swap Paging Space:</span>
-                                <span id="swapLabel" class="text-emerald-400 font-bold">4096 MB</span>
+                                <span id="swapLabel" class="text-emerald-700 font-bold">4096 MB</span>
                             </div>
-                            <input type="range" id="swapSlider" min="0" max="8192" step="512" value="4096" class="w-full h-1.5 bg-slate-800 rounded appearance-none cursor-pointer accent-emerald-500">
+                            <input type="range" id="swapSlider" min="0" max="8192" step="512" value="4096" class="w-full h-1.5 bg-slate-200 rounded appearance-none cursor-pointer accent-emerald-600">
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Host Status Summary Footer -->
-            <div class="p-3 border-t border-slate-800 bg-[#090E1A] text-[11px] font-mono text-slate-400 space-y-1">
+            <div class="p-3 border-t border-slate-200 bg-slate-100 text-[11px] font-mono text-slate-600 space-y-1">
                 <div class="flex justify-between">
-                    <span>Virtio-Balloon:</span> <span class="text-emerald-400">Active</span>
+                    <span>Virtio-Balloon:</span> <span class="text-emerald-700 font-bold">Active</span>
                 </div>
                 <div class="flex justify-between">
-                    <span>OOM-Killer Panic:</span> <span class="text-amber-400">vm.panic_on_oom = 0</span>
+                    <span>OOM-Killer Panic:</span> <span class="text-amber-700 font-bold">vm.panic_on_oom = 0</span>
                 </div>
             </div>
         </aside>
 
-        <!-- Center Stage: 3D Server Rack Viewport -->
-        <main class="relative bg-[#070B14] overflow-hidden flex flex-col">
+        <!-- Center Stage: 3D Server Rack Viewport (Clean White Canvas) -->
+        <main class="relative bg-[#F8FAFC] overflow-hidden flex flex-col">
             <!-- Camera Perspective Selector HUD -->
             <div class="viewport-hud">
                 <button onclick="changeView('iso')" id="btnViewIso" class="viewport-hud-btn active">Isometric Rack View</button>
@@ -158,70 +158,70 @@
         </main>
 
         <!-- Right Panel: Hypervisor virtio-balloon Sliders & Syslog -->
-        <section class="workstation-panel border-l border-slate-800 flex flex-col justify-between">
+        <section class="workstation-panel border-l border-slate-200 bg-white flex flex-col justify-between">
             <div class="flex-1 overflow-y-auto">
-                <div class="panel-header">
+                <div class="panel-header border-b border-slate-200 bg-slate-50 text-slate-700">
                     <span>virtio-balloon VM Allocators</span>
-                    <span class="text-amber-400 text-[10px]">Overcommit Active</span>
+                    <span class="text-amber-700 text-[10px] font-bold">Overcommit Active</span>
                 </div>
 
                 <!-- 3 VM Balloon Sliders -->
                 <div class="p-3.5 space-y-3 font-mono text-xs">
 
                     <!-- VM 101: Web Nginx -->
-                    <div id="card-vm101" class="p-3 rounded bg-slate-950 border border-slate-800 transition-all space-y-1.5">
+                    <div id="card-vm101" class="p-3 rounded bg-slate-50 border border-slate-200 transition-all space-y-1.5">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-cyan-400 text-[11px]">VM 101: Web Nginx</span>
+                            <span class="font-bold text-cyan-800 text-[11px]">VM 101: Web Nginx</span>
                             <div class="flex items-center space-x-2 text-[10px]">
-                                <span class="text-slate-400">Beban: <b id="demand-vm101" class="text-cyan-400">1.8 GB</b></span>
+                                <span class="text-slate-500">Beban: <b id="demand-vm101" class="text-cyan-700">1.8 GB</b></span>
                                 <button id="restart-vm101" class="tactile-btn text-[10px] py-0.5 px-1.5">Restart</button>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="text-[10px] text-slate-500 w-12">1.5G</span>
-                            <input type="range" id="slider-vm101" min="1536" max="6144" step="256" value="4096" class="flex-1 h-1.5 bg-slate-800 rounded appearance-none cursor-pointer accent-cyan-500">
-                            <span id="label-vm101" class="text-cyan-400 font-bold text-[11px] w-14 text-right">4.0 GB</span>
+                            <input type="range" id="slider-vm101" min="1536" max="6144" step="256" value="4096" class="flex-1 h-1.5 bg-slate-200 rounded appearance-none cursor-pointer accent-cyan-600">
+                            <span id="label-vm101" class="text-cyan-800 font-bold text-[11px] w-14 text-right">4.0 GB</span>
                         </div>
                     </div>
 
                     <!-- VM 102: DB Postgres -->
-                    <div id="card-vm102" class="p-3 rounded bg-slate-950 border border-slate-800 transition-all space-y-1.5">
+                    <div id="card-vm102" class="p-3 rounded bg-slate-50 border border-slate-200 transition-all space-y-1.5">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-emerald-400 text-[11px]">VM 102: DB Postgres</span>
+                            <span class="font-bold text-emerald-800 text-[11px]">VM 102: DB Postgres</span>
                             <div class="flex items-center space-x-2 text-[10px]">
-                                <span class="text-slate-400">Beban: <b id="demand-vm102" class="text-emerald-400">3.2 GB</b></span>
+                                <span class="text-slate-500">Beban: <b id="demand-vm102" class="text-emerald-700">3.2 GB</b></span>
                                 <button id="restart-vm102" class="tactile-btn text-[10px] py-0.5 px-1.5">Restart</button>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="text-[10px] text-slate-500 w-12">3.0G</span>
-                            <input type="range" id="slider-vm102" min="3072" max="10240" step="256" value="6144" class="flex-1 h-1.5 bg-slate-800 rounded appearance-none cursor-pointer accent-emerald-500">
-                            <span id="label-vm102" class="text-emerald-400 font-bold text-[11px] w-14 text-right">6.0 GB</span>
+                            <input type="range" id="slider-vm102" min="3072" max="10240" step="256" value="6144" class="flex-1 h-1.5 bg-slate-200 rounded appearance-none cursor-pointer accent-emerald-600">
+                            <span id="label-vm102" class="text-emerald-800 font-bold text-[11px] w-14 text-right">6.0 GB</span>
                         </div>
                     </div>
 
                     <!-- VM 103: AI Inference -->
-                    <div id="card-vm103" class="p-3 rounded bg-slate-950 border border-slate-800 transition-all space-y-1.5">
+                    <div id="card-vm103" class="p-3 rounded bg-slate-50 border border-slate-200 transition-all space-y-1.5">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-amber-400 text-[11px]">VM 103: AI Worker</span>
+                            <span class="font-bold text-amber-800 text-[11px]">VM 103: AI Worker</span>
                             <div class="flex items-center space-x-2 text-[10px]">
-                                <span class="text-slate-400">Beban: <b id="demand-vm103" class="text-amber-400">3.5 GB</b></span>
+                                <span class="text-slate-500">Beban: <b id="demand-vm103" class="text-amber-700">3.5 GB</b></span>
                                 <button id="restart-vm103" class="tactile-btn text-[10px] py-0.5 px-1.5">Restart</button>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="text-[10px] text-slate-500 w-12">3.5G</span>
-                            <input type="range" id="slider-vm103" min="3584" max="14336" step="256" value="6144" class="flex-1 h-1.5 bg-slate-800 rounded appearance-none cursor-pointer accent-amber-500">
-                            <span id="label-vm103" class="text-amber-400 font-bold text-[11px] w-14 text-right">6.0 GB</span>
+                            <input type="range" id="slider-vm103" min="3584" max="14336" step="256" value="6144" class="flex-1 h-1.5 bg-slate-200 rounded appearance-none cursor-pointer accent-amber-600">
+                            <span id="label-vm103" class="text-amber-800 font-bold text-[11px] w-14 text-right">6.0 GB</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Live Kernel Syslog Terminal (Bottom of Right Sidebar) -->
-            <div class="h-44 border-t border-slate-800 bg-[#050811] flex flex-col font-mono text-[11px]">
-                <div class="bg-slate-900 px-3 py-1.5 border-b border-slate-800 flex justify-between items-center text-slate-400">
-                    <span>Kernel Syslog (dmesg)</span>
+            <!-- Live Kernel Syslog Terminal (High Contrast Console) -->
+            <div class="h-44 border-t border-slate-200 bg-[#0F172A] flex flex-col font-mono text-[11px]">
+                <div class="bg-slate-900 px-3 py-1.5 border-b border-slate-800 flex justify-between items-center text-slate-300">
+                    <span class="font-bold">Kernel Syslog (dmesg)</span>
                     <span class="text-[10px] text-emerald-400">● Live</span>
                 </div>
                 <div id="hypervisorLog" class="flex-1 p-2.5 overflow-y-auto space-y-1 text-slate-300">
