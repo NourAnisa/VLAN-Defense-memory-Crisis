@@ -3,193 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOC Virtual Lab - VLAN Defense & Memory Overcommit Crisis</title>
+    <title>Enterprise Cloud &amp; NOC Virtual Lab - Praktikum Jaringan &amp; Virtualisasi</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#050811">
+    <meta name="theme-color" content="#0B0F19">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-[#050811] text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
+<body class="bg-[#0B0F19] text-slate-100 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-black">
 
     <!-- Top Navigation Bar -->
-    <header class="border-b border-cyan-500/20 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
+    <header class="border-b border-slate-800 bg-[#0F172A] sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-cyan-600 to-blue-600 flex items-center justify-center font-mono font-bold text-lg shadow-lg shadow-cyan-500/20">
+                <div class="w-9 h-9 rounded bg-slate-800 border border-slate-700 flex items-center justify-center font-mono font-bold text-sm text-cyan-400">
                     NOC
                 </div>
                 <div>
-                    <h1 class="text-sm sm:text-base font-bold tracking-wider text-slate-100 uppercase">Virtual Lab Gamification</h1>
-                    <p class="text-xs text-cyan-400 font-mono">Cisco 802.1Q &amp; Proxmox Overcommit</p>
+                    <h1 class="text-xs sm:text-sm font-bold tracking-wider text-slate-100 uppercase">Enterprise Systems Laboratory</h1>
+                    <p class="text-[11px] text-slate-400 font-mono">Jaringan Komputer, Virtualisasi Cloud &amp; Container Orchestration</p>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-4">
-                <a href="lab-guide.html" class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-md border border-slate-700 bg-slate-900/60 hover:bg-slate-800 text-xs font-mono text-cyan-300 transition-all">
-                    LKM &amp; Modul Praktikum
+            <div class="flex items-center space-x-3">
+                <a href="lab-guide.html" class="inline-flex items-center px-3 py-1.5 rounded border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs font-mono text-cyan-300 transition-all">
+                    Lembar Kerja (LKM)
                 </a>
-                <a href="Modul_Praktikum_VLAN_dan_Memory_Crisis.docx" download class="inline-flex items-center px-3 py-1.5 rounded-md bg-cyan-600 hover:bg-cyan-500 text-xs font-semibold text-slate-950 transition-all shadow-md shadow-cyan-600/30">
+                <a href="Modul_Praktikum_VLAN_dan_Memory_Crisis.docx" download class="inline-flex items-center px-3 py-1.5 rounded bg-cyan-700 hover:bg-cyan-600 text-xs font-bold text-white transition-all shadow-sm">
                     Unduh Modul .DOCX
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full space-y-12">
-
-        <!-- Hero Section -->
-        <section class="text-center space-y-4 max-w-3xl mx-auto">
-            <div class="inline-flex items-center px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-xs font-mono mb-2">
-                Praktikum Jaringan Komputer &amp; Virtualisasi Cloud
+    <!-- Operational Telemetry Bar -->
+    <div class="border-b border-slate-800/80 bg-[#090D16] py-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono text-slate-400">
+            <div class="flex items-center space-x-4">
+                <span class="flex items-center space-x-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block"></span>
+                    <span class="text-slate-300">Cluster Status: Operational</span>
+                </span>
+                <span class="text-slate-600">|</span>
+                <span>Proxmox Physical: 16 GB RAM</span>
+                <span class="text-slate-600 hidden sm:inline">|</span>
+                <span class="hidden sm:inline">Cisco Switch: 3850 Catalyst (802.1Q)</span>
             </div>
-            <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-200 to-cyan-400 bg-clip-text text-transparent">
-                Gamifikasi Praktikum Interaktif Tanpa Beban Aplikasi Berat
-            </h2>
-            <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
-                Tantangan gamifikasi laboratorium untuk mahasiswa IT. Jalankan simulasi 3D real-time di browser Anda: selamatkan paket data dari kebocoran VLAN dengan Cisco IOS CLI, dan kendalikan memori server Proxmox dari ancaman Linux OOM-Killer.
-            </p>
+            <div class="flex items-center space-x-3">
+                <span class="text-cyan-400">PWA Offline Enabled</span>
+                <span class="text-slate-600">|</span>
+                <span>Instruktur: Nor Anisa, M.Kom</span>
+            </div>
+        </div>
+    </div>
 
-            <!-- Student Identity Input -->
-            <div class="pt-4 max-w-md mx-auto">
-                <div class="flex items-center rounded-lg border border-cyan-500/30 bg-slate-900/90 p-1.5 focus-within:border-cyan-400 transition-all">
-                    <span class="px-3 text-xs font-mono text-slate-400">NAMA / KELOMPOK:</span>
-                    <input type="text" id="studentNameInput" placeholder="Contoh: Kelompok 1 - Nor Anisa" class="bg-transparent flex-1 text-xs font-mono text-cyan-300 outline-none px-2 py-1">
-                    <button id="saveNameBtn" class="px-3 py-1 bg-cyan-600 hover:bg-cyan-500 text-slate-950 rounded text-xs font-bold transition-all">
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full space-y-10">
+
+        <!-- Student Identity & Context Box -->
+        <section class="rounded-xl border border-slate-800 bg-[#111827] p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="space-y-1 max-w-2xl">
+                <div class="flex items-center space-x-2">
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-800 text-cyan-300 border border-slate-700">PORTAL PRAKTIKUM MAHASISWA</span>
+                    <span class="text-xs text-slate-400">Tahun Akademik 2026/2027</span>
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-100">
+                    Laboratorium Gamifikasi Sistem Komputasi &amp; Jaringan
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                    Dirancang untuk mengatasi kendala laptop mahasiswa yang berat saat menjalankan GNS3, EVE-NG, atau membuka beberapa Virtual Machine di VMware Workstation secara bersamaan. Jalankan simulasi rekayasa 3D interaktif dan dual CLI langsung dari browser.
+                </p>
+            </div>
+
+            <!-- Profile Input Form -->
+            <div class="w-full md:w-80 rounded-lg border border-slate-700/80 bg-slate-900/90 p-3.5 space-y-2">
+                <label class="text-[11px] font-mono text-slate-400 block uppercase">Identitas Mahasiswa / Kelompok:</label>
+                <div class="flex space-x-1.5">
+                    <input type="text" id="studentNameInput" placeholder="Nama / NIM / Kelompok" class="bg-slate-950 border border-slate-700 rounded px-2.5 py-1.5 text-xs font-mono text-cyan-300 flex-1 outline-none focus:border-cyan-500">
+                    <button id="saveNameBtn" class="px-3 py-1.5 rounded bg-cyan-700 hover:bg-cyan-600 text-xs font-mono font-bold text-white transition-all cursor-pointer">
                         Simpan
                     </button>
                 </div>
-                <p id="studentGreeting" class="text-xs text-emerald-400 font-mono mt-2 hidden"></p>
+                <p id="studentGreeting" class="text-[11px] text-emerald-400 font-mono hidden"></p>
             </div>
         </section>
 
-        <!-- Lab Scenario Cards -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-            <!-- Card 1: VLAN Tower Defense -->
-            <div class="rounded-2xl border border-cyan-500/30 bg-gradient-to-b from-slate-900/80 to-slate-950 p-6 sm:p-8 flex flex-col justify-between hover:border-cyan-400/60 transition-all shadow-xl shadow-cyan-950/20 group">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <span class="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                            SKENARIO 1 - NETWORKING
-                        </span>
-                        <span class="text-xs font-mono text-slate-400">Batas Waktu: 15 Menit</span>
-                    </div>
-
-                    <h3 class="text-2xl font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">
-                        VLAN Tower Defense (802.1Q)
-                    </h3>
-
-                    <p class="text-sm text-slate-400 leading-relaxed">
-                        Konsep Cisco Packet Tracer Custom Packet Activity dalam 3D WebGL. Anda bertindak sebagai Network Administrator pada Cisco Catalyst 3850 Core Switch. Konfigurasikan VLAN ID, Access Port, dan 802.1Q Trunk Port melalui terminal Cisco IOS asli sebelum paket rahasia Client A bocor ke VLAN B atau diserang Rogue Intruder!
-                    </p>
-
-                    <div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2 font-mono text-xs">
-                        <div class="flex justify-between text-slate-400">
-                            <span>VLAN 10:</span> <span class="text-cyan-400">Finance Division (fa0/1 - fa0/4)</span>
-                        </div>
-                        <div class="flex justify-between text-slate-400">
-                            <span>VLAN 20:</span> <span class="text-emerald-400">Engineering Lab (fa0/10 - fa0/12)</span>
-                        </div>
-                        <div class="flex justify-between text-slate-400">
-                            <span>Trunk gi0/1:</span> <span class="text-amber-400">Uplink Server Core (Tagging 802.1Q)</span>
-                        </div>
-                    </div>
+        <!-- 3 Interactive Practical Modules -->
+        <section class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-100">Modul Simulasi &amp; Praktikum Aktif</h3>
+                    <p class="text-xs text-slate-400">Pilih skenario praktikum di bawah untuk memulai sesi eksperimen laboratorium.</p>
                 </div>
-
-                <div class="pt-6">
-                    <a href="vlan-defense.html" class="w-full inline-flex items-center justify-center py-3 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white shadow-lg shadow-cyan-600/30 transition-all">
-                        Mulai Misi VLAN Defense 3D &rarr;
-                    </a>
-                </div>
+                <span class="text-xs font-mono text-slate-500">3 Skenario Tersedia</span>
             </div>
 
-            <!-- Card 2: Memory Overcommit Crisis -->
-            <div class="rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-slate-900/80 to-slate-950 p-6 sm:p-8 flex flex-col justify-between hover:border-emerald-400/60 transition-all shadow-xl shadow-emerald-950/20 group">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <span class="px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                            SKENARIO 2 - CLOUD VIRTUALIZATION
-                        </span>
-                        <span class="text-xs font-mono text-slate-400">Host Physical: 16 GB RAM</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Module 1: VLAN Tower Defense -->
+                <div class="rounded-xl border border-slate-800 bg-[#111827] p-5 flex flex-col justify-between hover:border-cyan-500/50 transition-all shadow-lg group">
+                    <div class="space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-950 text-cyan-300 border border-cyan-800">
+                                SKENARIO 1: NETWORKING
+                            </span>
+                            <span class="text-[11px] font-mono text-slate-400">15 Menit</span>
+                        </div>
+
+                        <h4 class="text-lg font-bold text-slate-100 group-hover:text-cyan-300 transition-colors">
+                            VLAN Tower Defense (802.1Q)
+                        </h4>
+
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Simulasi 3D Cisco Catalyst 3850 Core Switch. Konfigurasikan VLAN ID, access port per departemen, dan link trunk 802.1Q via terminal Cisco IOS CLI otentik sebelum paket rahasia Client A bocor ke VLAN B atau diretas intruder.
+                        </p>
+
+                        <div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-1.5 font-mono text-[11px]">
+                            <div class="flex justify-between text-slate-400">
+                                <span>VLAN 10:</span> <span class="text-cyan-400">Finance (Fa0/1 - Fa0/4)</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>VLAN 20:</span> <span class="text-emerald-400">Engineering (Fa0/10 - Fa0/12)</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>Uplink Gi0/1:</span> <span class="text-amber-400">802.1Q Trunk Tagging</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <h3 class="text-2xl font-bold text-slate-100 group-hover:text-emerald-300 transition-colors">
-                        Memory Overcommit Crisis
-                    </h3>
-
-                    <p class="text-sm text-slate-400 leading-relaxed">
-                        Tantangan lingkungan Proxmox VE / VMware ESXi. Tiga Virtual Machine (Web Nginx, DB Postgres, AI Worker) meminta total 30 GB memori virtual pada server fisik yang hanya berkapasitas 16 GB RAM. Kendalikan virtio-ballooning, aktifkan Kernel Samepage Merging (KSM), dan atur paging ZRAM/Swap secara dinamis agar VM tidak terkena Kernel Panic OOM.
-                    </p>
-
-                    <div class="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-2 font-mono text-xs">
-                        <div class="flex justify-between text-slate-400">
-                            <span>VM 101 (Nginx):</span> <span class="text-cyan-400">Burst Traffic Wave 1 - 4.5 GB</span>
-                        </div>
-                        <div class="flex justify-between text-slate-400">
-                            <span>VM 102 (DB Postgres):</span> <span class="text-emerald-400">Heavy Query Wave 2 - 7.8 GB</span>
-                        </div>
-                        <div class="flex justify-between text-slate-400">
-                            <span>VM 103 (AI Worker):</span> <span class="text-amber-400">LLM Inference Wave 3 - 11.5 GB</span>
-                        </div>
+                    <div class="pt-5">
+                        <a href="vlan-defense.html" class="w-full inline-flex items-center justify-center py-2.5 px-3 rounded-lg font-mono font-bold text-xs bg-cyan-700 hover:bg-cyan-600 text-white transition-all shadow">
+                            Buka Simulasi VLAN 3D &rarr;
+                        </a>
                     </div>
                 </div>
 
-                <div class="pt-6">
-                    <a href="memory-crisis.html" class="w-full inline-flex items-center justify-center py-3 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 transition-all">
-                        Mulai Lab Overcommit Crisis 3D &rarr;
-                    </a>
+                <!-- Module 2: Memory Overcommit Crisis -->
+                <div class="rounded-xl border border-slate-800 bg-[#111827] p-5 flex flex-col justify-between hover:border-emerald-500/50 transition-all shadow-lg group">
+                    <div class="space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-800">
+                                SKENARIO 2: VIRTUALIZATION
+                            </span>
+                            <span class="text-[11px] font-mono text-slate-400">Host: 16 GB RAM</span>
+                        </div>
+
+                        <h4 class="text-lg font-bold text-slate-100 group-hover:text-emerald-300 transition-colors">
+                            Memory Overcommit Crisis
+                        </h4>
+
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Simulasi lingkungan Proxmox VE 8.1 / VMware ESXi. Tiga Virtual Machine menuntut 30 GB memori virtual pada server fisik 16 GB. Kendalikan virtio-ballooning dinamis dan aktifkan KSM untuk mencegah pemicuan Linux OOM-Killer.
+                        </p>
+
+                        <div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-1.5 font-mono text-[11px]">
+                            <div class="flex justify-between text-slate-400">
+                                <span>Rasio Overcommit:</span> <span class="text-amber-400">1.87x (30 GB / 16 GB)</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>Mekanisme KSM:</span> <span class="text-emerald-400">Hemat ~1.8 GB RAM</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>Beban Kerja:</span> <span class="text-rose-400">5 Gelombang Stress-ng</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-5">
+                        <a href="memory-crisis.html" class="w-full inline-flex items-center justify-center py-2.5 px-3 rounded-lg font-mono font-bold text-xs bg-emerald-700 hover:bg-emerald-600 text-white transition-all shadow">
+                            Buka Lab Overcommit 3D &rarr;
+                        </a>
+                    </div>
                 </div>
+
+                <!-- Module 3: Kubernetes vs OpenShift -->
+                <div class="rounded-xl border border-slate-800 bg-[#111827] p-5 flex flex-col justify-between hover:border-rose-500/50 transition-all shadow-lg group">
+                    <div class="space-y-3.5">
+                        <div class="flex items-center justify-between">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-950 text-rose-300 border border-rose-800">
+                                SKENARIO 3: CONTAINER CLOUD
+                            </span>
+                            <span class="text-[11px] font-mono text-slate-400">CNCF vs Red Hat</span>
+                        </div>
+
+                        <h4 class="text-lg font-bold text-slate-100 group-hover:text-rose-300 transition-colors">
+                            Kubernetes vs OpenShift (OCP)
+                        </h4>
+
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Laboratorium komparasi orkestrasi kontainer tingkat enterprise. Rasakan perbedaan arsitektur Vanilla K8s vs Red Hat OpenShift dengan simulator dual CLI (<code>kubectl</code> vs <code>oc</code>), Ingress vs Route, dan mitigasi root container via SCC.
+                        </p>
+
+                        <div class="p-3 rounded bg-slate-950 border border-slate-800 space-y-1.5 font-mono text-[11px]">
+                            <div class="flex justify-between text-slate-400">
+                                <span>Dual Terminal:</span> <span class="text-blue-400">kubectl &amp; oc Support</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>Keamanan Host:</span> <span class="text-rose-400">SCC Non-Root Enforcement</span>
+                            </div>
+                            <div class="flex justify-between text-slate-400">
+                                <span>CI/CD Bawaan:</span> <span class="text-cyan-400">Source-to-Image (S2I)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-5">
+                        <a href="k8s-vs-openshift.html" class="w-full inline-flex items-center justify-center py-2.5 px-3 rounded-lg font-mono font-bold text-xs bg-rose-700 hover:bg-rose-600 text-white transition-all shadow">
+                            Buka Lab K8s vs OpenShift &rarr;
+                        </a>
+                    </div>
+                </div>
+
             </div>
-
         </section>
 
-        <!-- Practicum Guide & Rubric Teaser -->
-        <section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="space-y-2">
-                <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest">Modul Panduan &amp; Rubrik Asesmen</span>
-                <h4 class="text-xl font-bold text-slate-100">Lembar Kerja Mahasiswa (LKM) &amp; Panduan Implementasi</h4>
-                <p class="text-sm text-slate-400 max-w-2xl">
-                    Dilengkapi panduan langkah demi langkah implementasi di Cisco Packet Tracer (sintaks CLI lengkap) dan Proxmox VE CLI (<code class="text-cyan-300">qm set --balloon</code>, <code class="text-cyan-300">ksmtuned</code>, <code class="text-cyan-300">vm.swappiness</code>) serta kriteria evaluasi praktikum.
+        <!-- Practical Modules & Assessmet Card -->
+        <section class="rounded-xl border border-slate-800 bg-[#111827] p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="space-y-1.5">
+                <span class="text-[10px] font-mono text-cyan-400 uppercase tracking-widest block">Dokumentasi &amp; Asesmen Laboratorium</span>
+                <h4 class="text-lg font-bold text-slate-100">Lembar Kerja Mahasiswa (LKM) &amp; Modul Praktikum Resmi (.DOCX)</h4>
+                <p class="text-xs text-slate-400 max-w-2xl leading-relaxed">
+                    Tersedia modul lengkap format Microsoft Word berisi panduan Packet Tracer (Custom Packet Activity), skrip Proxmox CLI, instruksi terminal Kubernetes &amp; OpenShift, tabel rubrik penilaian kinerja, serta soal analisis reflektif mahasiswa.
                 </p>
             </div>
-            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-                <a href="lab-guide.html" class="px-5 py-2.5 rounded-xl border border-cyan-500/40 bg-cyan-950/40 hover:bg-cyan-900/60 text-cyan-300 text-xs font-mono font-bold text-center transition-all">
+            <div class="flex flex-col sm:flex-row gap-2.5 w-full md:w-auto shrink-0">
+                <a href="lab-guide.html" class="px-4 py-2 rounded border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs font-mono font-bold text-cyan-300 text-center transition-all">
                     Buka LKM Online
                 </a>
-                <a href="Modul_Praktikum_VLAN_dan_Memory_Crisis.docx" download class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono text-center transition-all">
+                <a href="Modul_Praktikum_VLAN_dan_Memory_Crisis.docx" download class="px-4 py-2 rounded bg-cyan-700 hover:bg-cyan-600 text-xs font-mono font-bold text-white text-center transition-all shadow">
                     Unduh Modul .DOCX
                 </a>
             </div>
         </section>
 
-        <!-- Live Leaderboard Section -->
-        <section class="rounded-2xl border border-slate-800 bg-slate-950/90 p-6 space-y-4">
+        <!-- NOC Leaderboard Section -->
+        <section class="rounded-xl border border-slate-800 bg-[#0F172A] p-5 space-y-4">
             <div class="flex items-center justify-between">
                 <div>
-                    <h4 class="text-base font-bold text-slate-100 flex items-center space-x-2">
-                        <span>Papan Peringkat Laboratorium (NOC Leaderboard)</span>
-                    </h4>
-                    <p class="text-xs text-slate-400">Skor performa praktikum mahasiswa berdasarkan efisiensi penanganan insiden.</p>
+                    <h4 class="text-sm font-bold text-slate-100">Papan Peringkat Laboratorium (NOC Leaderboard)</h4>
+                    <p class="text-xs text-slate-400">Peringkat evaluasi mahasiswa berdasarkan kecepatan penyelesaian dan keandalan sistem.</p>
                 </div>
-                <span class="text-xs font-mono text-emerald-400">Realtime Sync Active</span>
+                <span class="text-[11px] font-mono text-emerald-400">● Realtime Sync</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Skenario 1 Top Scores -->
-                <div class="border border-slate-800 rounded-xl p-4 bg-slate-900/40">
-                    <h5 class="text-xs font-mono font-bold text-cyan-400 uppercase mb-3">Top Scores: VLAN Tower Defense</h5>
-                    <div id="vlanLeaderboardList" class="space-y-2 text-xs font-mono text-slate-300">
-                        <div class="text-slate-500">Memuat skor...</div>
+                <div class="border border-slate-800 rounded-lg p-3.5 bg-slate-950/60 space-y-2">
+                    <span class="text-[11px] font-mono font-bold text-cyan-400 block uppercase">Top Scores: Skenario 1 VLAN Tower Defense</span>
+                    <div id="vlanLeaderboardList" class="space-y-1.5 text-xs font-mono text-slate-300">
+                        <div class="text-slate-500">Memuat data leaderboard...</div>
                     </div>
                 </div>
 
-                <!-- Skenario 2 Top Scores -->
-                <div class="border border-slate-800 rounded-xl p-4 bg-slate-900/40">
-                    <h5 class="text-xs font-mono font-bold text-emerald-400 uppercase mb-3">Top Scores: Memory Overcommit Crisis</h5>
-                    <div id="memoryLeaderboardList" class="space-y-2 text-xs font-mono text-slate-300">
-                        <div class="text-slate-500">Memuat skor...</div>
+                <div class="border border-slate-800 rounded-lg p-3.5 bg-slate-950/60 space-y-2">
+                    <span class="text-[11px] font-mono font-bold text-emerald-400 block uppercase">Top Scores: Skenario 2 Memory Overcommit Crisis</span>
+                    <div id="memoryLeaderboardList" class="space-y-1.5 text-xs font-mono text-slate-300">
+                        <div class="text-slate-500">Memuat data leaderboard...</div>
                     </div>
                 </div>
             </div>
@@ -198,19 +266,17 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-950 py-6 text-center text-xs text-slate-500 font-mono">
-        <p>NOC Virtual Lab &copy; 2026. Dikembangkan untuk Gamifikasi Pembelajaran Jaringan &amp; Virtualisasi Cloud.</p>
-        <p class="mt-1 text-slate-600">PWA Offline Enabled | Three.js WebGL Engine | Supabase Realtime Ready</p>
+    <footer class="border-t border-slate-800 bg-[#0F172A] py-6 text-center text-xs text-slate-500 font-mono">
+        <p>Enterprise Cloud &amp; NOC Virtual Lab &copy; 2026. Dikembangkan untuk Praktikum Program Studi Ilmu Komputer / Teknologi Informasi.</p>
+        <p class="mt-1 text-slate-600">Three.js WebGL Engine | PWA Standalone Ready | Supabase Realtime</p>
     </footer>
 
     <script src="js/supabase-config.js"></script>
     <script>
-        // PWA Service Worker Registration
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("sw.js").catch(console.error);
         }
 
-        // Student Name Handler
         const nameInput = document.getElementById("studentNameInput");
         const saveBtn = document.getElementById("saveNameBtn");
         const greeting = document.getElementById("studentGreeting");
@@ -218,7 +284,7 @@
         const savedName = localStorage.getItem("itlab_student_name");
         if (savedName) {
             nameInput.value = savedName;
-            greeting.innerText = `Selamat datang kembali, ${savedName}!`;
+            greeting.innerText = `Identitas aktif: ${savedName}`;
             greeting.classList.remove("hidden");
         }
 
@@ -231,7 +297,6 @@
             }
         });
 
-        // Load Leaderboards
         function renderLeaderboards() {
             const vlanList = document.getElementById("vlanLeaderboardList");
             const memList = document.getElementById("memoryLeaderboardList");
@@ -240,7 +305,7 @@
             const memScores = JSON.parse(localStorage.getItem("itlab_scores_memory") || "[]");
 
             if (vlanScores.length === 0) {
-                vlanList.innerHTML = `<div class="text-slate-500">Belum ada rekor tersimpan. Mulai misi pertama Anda!</div>`;
+                vlanList.innerHTML = `<div class="text-slate-500">Belum ada skor tersimpan. Selesaikan Misi 1!</div>`;
             } else {
                 vlanList.innerHTML = vlanScores.map((s, idx) => `
                     <div class="flex justify-between items-center py-1 border-b border-slate-800/60">
@@ -251,7 +316,7 @@
             }
 
             if (memScores.length === 0) {
-                memList.innerHTML = `<div class="text-slate-500">Belum ada rekor tersimpan. Hadapi krisis overcommit!</div>`;
+                memList.innerHTML = `<div class="text-slate-500">Belum ada skor tersimpan. Selesaikan Misi 2!</div>`;
             } else {
                 memList.innerHTML = memScores.map((s, idx) => `
                     <div class="flex justify-between items-center py-1 border-b border-slate-800/60">

@@ -167,10 +167,72 @@
             </div>
         </section>
 
-        <!-- Section 4: Rubrik Penilaian Praktikum -->
+        <!-- Section 4: Komparasi Kubernetes vs Red Hat OpenShift -->
+        <section class="space-y-4 border-t border-slate-800 pt-8">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-rose-400 flex items-center space-x-2">
+                    <span>4. Komparasi Arsitektur: Kubernetes vs Red Hat OpenShift (OCP)</span>
+                </h2>
+                <a href="k8s-vs-openshift.html" class="px-3 py-1 rounded bg-rose-950 border border-rose-800 text-rose-300 text-xs font-mono font-bold hover:bg-rose-900 transition-all">
+                    Buka Simulator CLI Dual &rarr;
+                </a>
+            </div>
+
+            <div class="space-y-3 text-sm text-slate-300 leading-relaxed">
+                <p>
+                    Dalam dunia industri modern, pemahaman mengenai platform kontainer tingkat enterprise adalah kompetensi wajib. <b>Kubernetes (K8s)</b> adalah proyek upstream open-source di bawah naungan Cloud Native Computing Foundation (CNCF), sedangkan <b>Red Hat OpenShift Container Platform (OCP)</b> adalah produk distribusi enterprise komersial yang dibangun di atas Kubernetes.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 rounded-xl bg-slate-950 border border-blue-900/60 space-y-2">
+                        <span class="font-bold text-[#326CE5] block">Vanilla Kubernetes (K8s)</span>
+                        <ul class="text-xs text-slate-400 space-y-1.5 list-disc list-inside">
+                            <li><b>Filosofi:</b> "Do-it-Yourself" (DIY). Inti orkestrasi kontainer minimalis.</li>
+                            <li><b>Ingress:</b> Membutuhkan Ingress Controller pihak ketiga (Nginx, Traefik, HAProxy) yang diinstal manual.</li>
+                            <li><b>Keamanan:</b> Secara default permisif. Kontainer diizinkan berjalan sebagai root (UID 0) kecuali jika dibatasi dengan Pod Security Standards (PSS).</li>
+                            <li><b>Build &amp; CI/CD:</b> Tidak memiliki mekanisme build bawaan. Memerlukan tool eksternal seperti Jenkins, GitLab CI, atau GitHub Actions.</li>
+                            <li><b>CLI Tool:</b> <code>kubectl</code> murni.</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-950 border border-rose-900/60 space-y-2">
+                        <span class="font-bold text-rose-400 block">Red Hat OpenShift (OCP)</span>
+                        <ul class="text-xs text-slate-400 space-y-1.5 list-disc list-inside">
+                            <li><b>Filosofi:</b> "Batteries-Included". Solusi full-stack siap produksi untuk enterprise.</li>
+                            <li><b>Ingress:</b> Memiliki objek <code>Route</code> bawaan berbasis HAProxy dengan wildcard DNS otomatis.</li>
+                            <li><b>Keamanan:</b> Sangat ketat (Strict). Secara default memblokir root container melalui Security Context Constraints (SCC).</li>
+                            <li><b>Build &amp; CI/CD:</b> Memiliki fitur Source-to-Image (S2I) dan internal image registry; mampu membangun kontainer langsung dari repository Git via <code>oc new-app</code>.</li>
+                            <li><b>CLI Tool:</b> <code>oc</code> CLI (super-set dari <code>kubectl</code>) yang mendukung context project dan status manajemen.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs space-y-2">
+                    <span class="text-slate-400 block uppercase tracking-wider text-[11px]">// Perbandingan Sintaks Perintah Esensial (kubectl vs oc)</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-300">
+                        <div>
+                            <span class="text-[#326CE5] font-bold block">// Vanilla Kubernetes</span>
+                            <code>kubectl get nodes</code><br>
+                            <code>kubectl get pods -n my-app</code><br>
+                            <code>kubectl apply -f ingress.yaml</code><br>
+                            <code>kubectl config set-context --current --namespace=my-app</code>
+                        </div>
+                        <div>
+                            <span class="text-rose-400 font-bold block">// Red Hat OpenShift</span>
+                            <code>oc get nodes</code><br>
+                            <code>oc project my-app</code><br>
+                            <code>oc expose service my-svc # Buat Route</code><br>
+                            <code>oc new-app nodejs:18~https://github.com/repo</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Rubrik Penilaian Praktikum -->
         <section class="space-y-4 border-t border-slate-800 pt-8">
             <h2 class="text-xl font-bold text-slate-100">
-                4. Rubrik Penilaian Praktikum (Asesmen Kinerja)
+                5. Rubrik Penilaian Praktikum (Asesmen Kinerja)
             </h2>
 
             <div class="overflow-x-auto">
